@@ -4,19 +4,27 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
+import Home from './pages/Home';
+import Contact from './pages/Contact';
+import SignUp from './pages/SignUp';
+import SignIn from './pages/SignIn';
+import Projects from './pages/Projects';
+var Router = require('react-router-dom').BrowserRouter
+var Route = require('react-router-dom').Route
+var path = require('react-router-dom').Link
 var firebase = require("firebase");
-
-var config = {
-    apiKey: "AIzaSyDPj0BZVQebAYww_VUFXhbEXPP-n2gq120",
-    authDomain: "seeding-solar.firebaseapp.com",
-    databaseURL: "https://seeding-solar.firebaseio.com",
-    projectId: "seeding-solar",
-    storageBucket: "seeding-solar.appspot.com",
-    messagingSenderId: "1066950282834"
-  };
-  firebase.initializeApp(config);
-
 var database = firebase.database();
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <Router>
+        <div>
+            <Route exact path="/" component={App}/>
+            <Route path="/Home" component={Home}/>
+            <Route path="/Contact" component={Contact}/>
+            <Route path="/Projects" component={Projects}/>
+            <Route path="/SignIn" component={SignIn}/>
+            <Route path="/SignUp" component={SignUp}/>
+        </div>
+    </Router>,
+     document.getElementById('root'));
 registerServiceWorker();

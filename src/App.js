@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import NavBar from './NavBar';
-var Router = require('react-router').Router
-var Route = require('react-router').Route
-var Switch = require('react-router').Switch
 var firebase = require("firebase");
 
 class App extends Component {
