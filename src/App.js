@@ -1,34 +1,38 @@
 import React, { Component } from 'react';
 import './App.css';
 import NavBar from './NavBar';
-var firebase = require("firebase");
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import firebase from './firebase';
+
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
-      speed: 10
+      authUser: null
     };
   }
 
-  componentDidMount() {
-    const rootRef = firebase.database().ref().child('react');
-    const speedRef = rootRef.child('speed');
-    speedRef.on('value', snap => {
-      this.setState({
-        speed: snap.val()
-      });
+  /*componentDidMount() {
+    firebase.auth.onAuthStateChanged(authUser => {
+      authUser
+        ? this.setState(() => ({ authUser}))
+        : this.setState(() => ({ authUser: null}));
     });
-  }
-  
+  }*/
+
   render() {
     return (
       <div className="App">
       <NavBar/>
-        <h1>{this.state.speed}</h1>
+        <Router>
+
+        </Router>
       </div>
     );
   }
 }
+
 
 export default App;

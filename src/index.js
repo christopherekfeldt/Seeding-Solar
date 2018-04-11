@@ -9,11 +9,18 @@ import Contact from './pages/Contact';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Projects from './pages/Projects';
+import * as auth from './auth';
+import * as firebase from './firebase';
+import SignOutButton from './pages/SignOut';
 var Router = require('react-router-dom').BrowserRouter
 var Route = require('react-router-dom').Route
 var path = require('react-router-dom').Link
-var firebase = require("firebase");
-var database = firebase.database();
+/*var database = firebase.database();*/
+
+export {
+    auth,
+    firebase,
+};
 
 ReactDOM.render(
     <Router>
@@ -24,6 +31,7 @@ ReactDOM.render(
             <Route path="/Projects" component={Projects}/>
             <Route path="/SignIn" component={SignIn}/>
             <Route path="/SignUp" component={SignUp}/>
+            <li><SignOutButton /></li>
         </div>
     </Router>,
      document.getElementById('root'));

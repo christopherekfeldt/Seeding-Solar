@@ -8,8 +8,10 @@ var config = {
     storageBucket: "seeding-solar.appspot.com",
     messagingSenderId: "1066950282834"
   };
-  firebase.initializeApp(config);
-
-  export const provider = new firebase.auth.EmailAuthProvider();
+  
+  if(!firebase.apps.length){
+    firebase.initializeApp(config);
+  }
+  
   export const auth = firebase.auth();
   export default firebase;

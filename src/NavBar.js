@@ -1,4 +1,6 @@
 import React from 'react';
+import SignOutButton from './pages/SignOut';
+
 import {
   Collapse,
   Navbar,
@@ -11,6 +13,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
+  
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -26,6 +29,8 @@ export default class NavBar extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
+
+
   render() {
     return (
       <div>
@@ -43,23 +48,26 @@ export default class NavBar extends React.Component {
               <NavItem>
                 <NavLink href="/Projects/"><h4>Projects</h4></NavLink>
               </NavItem>
+
+               
               <NavItem>
                 <NavLink href="/SignIn/"><h4>Sign in</h4></NavLink>
               </NavItem>
+
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                 <h4>Options</h4>
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    Option 1
+                    My account
                   </DropdownItem>
                   <DropdownItem>
-                    Option 2
+                    Settings
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
-                    Reset
+                    Log out
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
