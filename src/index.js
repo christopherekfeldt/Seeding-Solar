@@ -14,7 +14,6 @@ import * as firebase from './firebase';
 import SignOutButton from './pages/SignOut';
 var Router = require('react-router-dom').BrowserRouter
 var Route = require('react-router-dom').Route
-var path = require('react-router-dom').Link
 /*var database = firebase.database();*/
 
 export {

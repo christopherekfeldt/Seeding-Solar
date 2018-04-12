@@ -6,7 +6,6 @@ import {SignUp, SignUpLink} from './SignUp';
 
 const SignInPage = ({history}) =>
     <div>
-      <h1>Sign In</h1>
       <SignIn history={history} />
       <SignUpLink />  
     </div>
@@ -25,7 +24,7 @@ class SignIn extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {... INITIAL_STATE};
+        this.state = {...INITIAL_STATE};
     }
 
     onSubmit = (event) => {
@@ -55,19 +54,24 @@ class SignIn extends Component {
         return (
             <div className="App">
             <NavBar/>
+            <h1> Sign In </h1>
             <form onSubmit={this.onSubmit}>
+                <div>
                 <input
                     value={email}
                     onChange={event => this.setState(byPropKey('email', event.target.value))}
                     type="text"
                     placeholder="Email Address"
                 />
+                </div>
+                <div>
                 <input
                     value={password}
                     onChange={event => this.setState(byPropKey('password', event.target.value))}
                     type="password"
                     placeholder="Password"
                 />
+                </div>
                 <button disabled={isInvalid} type="submit">
                     Sign In
                 </button>

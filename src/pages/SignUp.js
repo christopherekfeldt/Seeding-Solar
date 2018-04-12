@@ -6,7 +6,6 @@ import {auth} from '../firebase';
 
 const SignUpPage = ({history}) =>
     <div>
-        <h1>Sign up</h1>
         <SignUp history={history} />
     </div>
 
@@ -42,7 +41,7 @@ class SignUp extends Component {
 
         auth.doCreateUserWithEmailAndPassword(email, passwordOne)
             .then(authUser => {
-                this.setState(() => ({ ... INITIAL_STATE}));
+                this.setState(() => ({...INITIAL_STATE}));
                 history.push('/Home');
             })
             .catch(error => {
@@ -70,31 +69,40 @@ class SignUp extends Component {
         return (
         <div className="App">
         <NavBar/>
+        <h1>Sign up</h1>
         <form onSubmit={this.onSubmit}>
+            <div>
             <input
                 value={username}
                 onChange={event => this.setState(byPropKey('username', event.target.value))}
                 type="text"
                 placeholder="Full Name"
                 />
+                </div>
+                <div>
                 <input
                     value={email}
                     onChange={event => this.setState(byPropKey('email', event.target.value))}
                     type="text"
                     placeholder="Email Adress"
                 />
+                </div>
+                <div>
                 <input
                     value={passwordOne}
                     onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
                     type="password"
                     placeholder="Password"
                 />
+                </div>
+                <div>
                 <input
                     value={passwordTwo}
                     onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
                     type="password"
                     placeholder="Confirm Password"
                 />
+                </div>
                 <button disabled={isInvalid} type="submit">
                     Sign up
                 </button>
@@ -107,12 +115,13 @@ class SignUp extends Component {
 } 
 
 const SignUpLink = () =>
+    <center>
     <p>
         Don't have an account?
         {' '}
         <Link to={'/SignUp'}> Sign up</Link>
     </p>
-
+    </center>
 export default withRouter(SignUpPage);
 
 export {

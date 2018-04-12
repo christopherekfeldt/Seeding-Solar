@@ -13,7 +13,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
-  
+
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -30,6 +30,15 @@ export default class NavBar extends React.Component {
     });
   }
 
+  /*const Navigation = ({authUser}) =>
+  <div>
+      { authUser
+          ? <NavigationAuth />
+          : <NavigationNonAuth />
+      }
+  </div>*/
+
+  /* VAR SÄTTER VI IF ELSE SATSEN? INNUTI UTANFÖR BAKOFRAM IN OCH UT? */
 
   render() {
     return (
@@ -49,7 +58,6 @@ export default class NavBar extends React.Component {
                 <NavLink href="/Projects/"><h4>Projects</h4></NavLink>
               </NavItem>
 
-               
               <NavItem>
                 <NavLink href="/SignIn/"><h4>Sign in</h4></NavLink>
               </NavItem>
