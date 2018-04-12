@@ -1,5 +1,6 @@
 import React from 'react';
 import SignOutButton from './pages/SignOut';
+import './App.css';
 
 import {
   Collapse,
@@ -42,14 +43,14 @@ export default class NavBar extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="Navbar">
         <Navbar color="faded" light expand="md">
           <NavbarBrand href="/"><h3>Seeding Solar</h3></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/Home/"><h4>Home</h4></NavLink>
+                <NavLink id="Home" href="/Home/"><h4>Home</h4></NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="/Contact/"><h4>Contact</h4></NavLink>

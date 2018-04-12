@@ -25,10 +25,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <NavBar/>
-        <Router>
-
-        </Router>
+      <NavBar authUser={this.state.authUser}/>
       </div>
     );
   }
