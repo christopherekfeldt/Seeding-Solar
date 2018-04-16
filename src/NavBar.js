@@ -1,7 +1,4 @@
 import React from 'react';
-import SignOutButton from './pages/SignOut';
-import './App.css';
-
 import {
   Collapse,
   Navbar,
@@ -31,26 +28,21 @@ export default class NavBar extends React.Component {
     });
   }
 
-  /*const Navigation = ({authUser}) =>
-  <div>
-      { authUser
-          ? <NavigationAuth />
-          : <NavigationNonAuth />
-      }
-  </div>*/
 
-  /* VAR SÄTTER VI IF ELSE SATSEN? INNUTI UTANFÖR BAKOFRAM IN OCH UT? */
+
+
 
   render() {
+    if(this.props.auth){
     return (
-      <div className="Navbar">
+      <div>
         <Navbar color="faded" light expand="md">
           <NavbarBrand href="/"><h3>Seeding Solar</h3></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink id="Home" href="/Home/"><h4>Home</h4></NavLink>
+                <NavLink href="/Home/"><h4>Home</h4></NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="/Contact/"><h4>Contact</h4></NavLink>
@@ -58,25 +50,23 @@ export default class NavBar extends React.Component {
               <NavItem>
                 <NavLink href="/Projects/"><h4>Projects</h4></NavLink>
               </NavItem>
-
               <NavItem>
                 <NavLink href="/SignIn/"><h4>Sign in</h4></NavLink>
               </NavItem>
-
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                <h4>Options</h4>
+                <h4>My name</h4>
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    My account
+                    Settings
                   </DropdownItem>
                   <DropdownItem>
-                    Settings
+                    my account
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
-                    Log out
+                    Reset
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -84,6 +74,34 @@ export default class NavBar extends React.Component {
           </Collapse>
         </Navbar>
       </div>
-    );
+    );}
+    else{
+      return (
+        <div>
+        <Navbar color="faded" light expand="md">
+          <NavbarBrand href="/"><h3>Seeding Solar</h3></NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink href="/Home/"><h4>Home</h4></NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/Contact/"><h4>Contact</h4></NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/Projects/"><h4>Projects</h4></NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/SignIn/"><h4>Sign in</h4></NavLink>
+              </NavItem>
+            </Nav>
+          </Collapse>
+        </Navbar>
+      </div>
+
+
+      );
+    }
   }
 }
