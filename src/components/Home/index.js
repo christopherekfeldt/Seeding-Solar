@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 
 import withAuthorization from '../Session/withAuthorization';
 import { db } from '../../firebase';
+import SignOutButton from '../SignOut';
 
 class HomePage extends Component {
   componentDidMount() {
@@ -24,6 +25,7 @@ class HomePage extends Component {
 
 
         { !!users && <UserList users={users} /> }
+        <SignOutButton />
       </div>
     );
   }

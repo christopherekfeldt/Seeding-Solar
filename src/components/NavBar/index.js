@@ -84,25 +84,25 @@ class NavBar extends React.Component {
                     <NavLink href="/Home/"><h4>Home</h4></NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="/Contact/"><h4>Contact</h4></NavLink>
+                    <NavLink href="/Aboutus/"><h4>About Us</h4></NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink href="/Projects/"><h4>Projects</h4></NavLink>
                   </NavItem>
                   <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
-                      My name
+                    <h5>My name</h5>
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem>
-                        Settings
+                        Overview
                       </DropdownItem>
                       <DropdownItem>
-                        my account
+                      <NavLink href="/Account/">My Account</NavLink>
                       </DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem>
-                        Sign out
+                        Sign Out
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
@@ -123,7 +123,7 @@ class NavBar extends React.Component {
                     <NavLink href="/Home/"><h4>Home</h4></NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="/Contact/"><h4>Contact</h4></NavLink>
+                    <NavLink href="/AboutUs/"><h4>About Us</h4></NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink href="/Projects/"><h4>Projects</h4></NavLink>

@@ -8,9 +8,11 @@ import withAuthorization from '../Session/withAuthorization';
 
 const AccountPage = ({ authUser }) =>
   <div>
-    <h1>Account: {authUser.email}</h1>
+    <center>
+    <h4>Account: {authUser.email}</h4>
     <PasswordForgetForm />
     <PasswordChangeForm />
+    </center>
   </div>
 
 const mapStateToProps = (state) => ({
