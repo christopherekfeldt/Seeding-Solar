@@ -7,6 +7,7 @@ import store from './store';
 import registerServiceWorker from './registerServiceWorker';
 import NavBar from './components/NavBar';
 import 'bootstrap/dist/css/bootstrap.css';
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

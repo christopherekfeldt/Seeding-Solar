@@ -2,10 +2,12 @@ import React from 'react';
 import {firebase, auth, db} from '../../firebase';
 import { connect } from 'react-redux';
 import withAuthorization from '../Session/withAuthorization';
-
+import withAuthentication from '../Session/withAuthentication';
 import { Link } from 'react-router-dom';
 import SignOutButton from '../SignOut';
 import * as routes from '../../constants/routes';
+
+
 import {
   Collapse,
   Navbar,
@@ -18,7 +20,30 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
-import withAuthentication from '../Session/withAuthentication';
+
+
+/*const Navigation = ({ authUser }) =>
+  <div>
+    { authUser
+        ? <NavigationAuth />
+        : <NavigationNonAuth />
+    }
+  </div>
+
+const NavigationAuth = () =>
+  <ul>
+    <li><Link to={routes.LANDING}>Landing</Link></li>
+    <li><Link to={routes.HOME}>Home</Link></li>
+    <li><Link to={routes.ACCOUNT}>Account</Link></li>
+    <li><SignOutButton /></li>
+  </ul>
+
+const NavigationNonAuth = () =>
+  <ul>
+    <li><Link to={routes.LANDING}>Landing</Link></li>
+    <li><Link to={routes.SIGN_IN}>Sign In</Link></li>
+  </ul>
+*/
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -66,7 +91,7 @@ class NavBar extends React.Component {
                   </NavItem>
                   <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
-                   My name
+                      My name
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem>
@@ -116,5 +141,8 @@ class NavBar extends React.Component {
     }
         
         
-    export default withAuthentication(NavBar);
-
+    const mapStateToProps = (state) => ({
+      authUser: state.sessionState.authUser,
+    });
+    
+    export default connect(mapStateToProps)(NavBar);
