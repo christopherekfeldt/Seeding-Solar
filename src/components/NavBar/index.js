@@ -21,29 +21,6 @@ import {
   DropdownItem } from 'reactstrap';
 
 
-/*const Navigation = ({ authUser }) =>
-  <div>
-    { authUser
-        ? <NavigationAuth />
-        : <NavigationNonAuth />
-    }
-  </div>
-
-const NavigationAuth = () =>
-  <ul>
-    <li><Link to={routes.LANDING}>Landing</Link></li>
-    <li><Link to={routes.HOME}>Home</Link></li>
-    <li><Link to={routes.ACCOUNT}>Account</Link></li>
-    <li><SignOutButton /></li>
-  </ul>
-
-const NavigationNonAuth = () =>
-  <ul>
-    <li><Link to={routes.LANDING}>Landing</Link></li>
-    <li><Link to={routes.SIGN_IN}>Sign In</Link></li>
-  </ul>
-*/
-
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -52,9 +29,19 @@ class NavBar extends React.Component {
     this.state = {
       authUser: null,
       isOpen: false,
-      username: null,
+      username: '',
     };
   }
+
+  /*componentWillMount() {
+      var uid = firebase.auth.currentUser.uid;
+      console.log(uid);
+      firebase.db.ref('users/' + uid).once('value').then(function(snapshot) {
+        this.setState({
+          username: snapshot.val().username
+        });
+      })}*/
+
   componentDidMount() {
     firebase.auth.onAuthStateChanged(authUser => {
       authUser
@@ -89,7 +76,7 @@ class NavBar extends React.Component {
                   </NavItem>
                   <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
-                    <h5>My Name</h5>
+                    <h5>{this.state.username}</h5>
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem>

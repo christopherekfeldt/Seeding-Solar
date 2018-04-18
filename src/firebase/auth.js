@@ -21,5 +21,5 @@ export const doPasswordUpdate = (password) =>
   auth.currentUser.updatePassword(password);
 
 export const showUser = (username) =>
-  auth.currentUser.displayName(username);
+  auth.currentUser.username;
 
