@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import SignOutButton from '../SignOut';
 import * as routes from '../../constants/routes';
 
-
 import {
   Collapse,
   Navbar,
@@ -71,7 +70,6 @@ class NavBar extends React.Component {
   }
 
   render() {
- 
         if (this.state.authUser) {
             return(
             <div>
@@ -91,7 +89,7 @@ class NavBar extends React.Component {
                   </NavItem>
                   <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
-                    <h5>My name</h5>
+                    <h5>My Name</h5>
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem>
@@ -101,9 +99,9 @@ class NavBar extends React.Component {
                       <NavLink href="/Account/">My Account</NavLink>
                       </DropdownItem>
                       <DropdownItem divider />
-                      <DropdownItem>
-                        Sign Out
-                      </DropdownItem>
+                      <DropdownItem>  
+                      <NavLink type="button" onClick={auth.doSignOut} href="/">Sign Out</NavLink>
+                     </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </Nav>
