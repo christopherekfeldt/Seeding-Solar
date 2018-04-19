@@ -1,13 +1,35 @@
 import React from 'react';
 import {  Nav, NavItem } from 'reactstrap';
 
+const footerStyle = {
+  color: 'black',
+  backgroundColor: 'grey',
+  height: 150
+};
 function Footer(/*props*/) {
   return (
-    <footer>
+    <footer style={footerStyle}>
         <Nav justified>
           <NavItem
             eventKey={1}>
-            Privacy policy
+            Contact
+          </NavItem>
+          <NavItem
+            eventKey={2}
+            title="Item">
+            FAQ
+          </NavItem>
+          <NavItem
+            eventKey={3}>
+            Follow
+          </NavItem>
+        </Nav>
+
+
+          <Nav justified>
+          <NavItem
+            eventKey={1}>
+            Email
           </NavItem>
           <NavItem
             eventKey={2}
@@ -16,9 +38,29 @@ function Footer(/*props*/) {
           </NavItem>
           <NavItem
             eventKey={3}>
-            Some other professional link
+            Facebook
           </NavItem>
         </Nav>
+
+
+
+          <Nav justified>
+          <NavItem
+            eventKey={1}>
+            Phone
+          </NavItem>
+          <NavItem
+            eventKey={2}
+            title="Item">
+            Privacy policy
+          </NavItem>
+          <NavItem
+            eventKey={3}>
+            Instagram
+          </NavItem>
+        </Nav>
+
+
 
         <div className="text-center small copyright">
           © RLM 2016
