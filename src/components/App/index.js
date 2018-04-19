@@ -13,23 +13,30 @@ import withAuthentication from '../Session/withAuthentication';
 import * as routes from '../../constants/routes';
 import NavBar from '../NavBar';
 import './index.css';
+import Footer from '../Footer';
 
 const App = () =>
   <Router>
     <div className="app">
-      <NavBar />
-      <hr/>
-
-      <Route exact path={routes.LANDING} component={() => <LandingPage />} />
-      <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
-      <Route exact path={routes.SIGN_IN} component={() => <SignInPage />} />
-      <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
-      <Route exact path={routes.HOME} component={() => <HomePage />} />
-      <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
-      <Route exact path={routes.PROJECTS} component={() => <ProjectPage />} />
-      <Route exact path={routes.ABOUTUS} component={() => <AboutUsPage />} />
-      <Route exact path={routes.SETTINGS} component={() => <SettingsPage />} />
-      <hr/>
+      <div className = "Site-content">
+        <div className = "App-header">
+         <NavBar />
+        </div>
+        <div className = "App-main">
+        <hr/>
+          <Route exact path={routes.LANDING} component={() => <LandingPage />} />
+          <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
+          <Route exact path={routes.SIGN_IN} component={() => <SignInPage />} />
+          <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
+          <Route exact path={routes.HOME} component={() => <HomePage />} />
+          <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
+          <Route exact path={routes.PROJECTS} component={() => <ProjectPage />} />
+          <Route exact path={routes.ABOUTUS} component={() => <AboutUsPage />} />
+          <Route exact path={routes.SETTINGS} component={() => <SettingsPage />} />
+        <hr/>
+        </div>
+      </div>
+    <Footer />
     </div>
   </Router>
 
