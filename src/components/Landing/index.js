@@ -1,8 +1,10 @@
 import React from 'react';
-import { Card, CardImg, CardText, CardBody,
+import Slideshow from '../Slideshow';
+
+/*import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 
-/*   <div class="card">
+   <div class="card">
       <Card>
         <CardImg width="40%" src="https://www.pexels.com/photo/alternative-alternative-energy-blue-eco-411592/" alt="Card image cap" />
         <CardBody>
@@ -22,6 +24,11 @@ const LandingPage = () =>
           <p>Here we will do godlike work together</p>
         </center>  
       </div>
+      <center>
+      <div>
+          <Slideshow />
+      </div>
+      </center>
   </div>
 
 export default LandingPage;
