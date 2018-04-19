@@ -20,6 +20,6 @@ export const doPasswordReset = (email) =>
 export const doPasswordUpdate = (password) =>
   auth.currentUser.updatePassword(password);
 
-export const showUser = () =>
-  auth.currentUser.displayName();
+export const showUser = (username) =>
+  auth.currentUser.username;
 
