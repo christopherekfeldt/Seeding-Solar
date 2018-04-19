@@ -88,7 +88,7 @@ class NavBar extends React.Component {
                   </NavItem>
                   <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
-                      <h5>{this.state.username}</h5>
+                      <h5>{this.state.authUser.email}</h5>
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem>
