@@ -6,3 +6,4 @@ export const HOME = '/home';
 export const ACCOUNT = '/account';
 export const PROJECTS = '/projects';
 export const ABOUTUS = '/aboutus';
+export const SETTINGS ='/settings';

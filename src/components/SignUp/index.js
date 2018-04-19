@@ -6,6 +6,7 @@ import {
 
 import { auth, db } from '../../firebase';
 import * as routes from '../../constants/routes';
+import { setDisplayName } from 'recompose';
 
 const SignUpPage = ({ history }) =>
   <div>
@@ -45,7 +46,7 @@ class SignUpForm extends Component {
       history,
     } = this.props;
 
-    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
+    auth.doCreateUserWithEmailAndPassword(email, passwordOne).setDisplayName(username)
       .then(authUser => {
 
         // Create a user in your own accessible Firebase Database too
@@ -87,6 +88,8 @@ class SignUpForm extends Component {
         <input
           value={username}
           onChange={event => this.setState(updateByPropertyName('username', event.target.value))}
+          /*onChange={event => this.setState(updateByPropertyName('displayName', event.target.value))}*/
+         /* onChange={event => this.setState(setDisplayName(event.target.value))} */
           type="text"
           placeholder="Full Name"
         />

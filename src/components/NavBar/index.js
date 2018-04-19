@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {firebase, auth, db} from '../../firebase';
 import { connect } from 'react-redux';
@@ -6,6 +7,7 @@ import withAuthentication from '../Session/withAuthentication';
 import { Link } from 'react-router-dom';
 import SignOutButton from '../SignOut';
 import * as routes from '../../constants/routes';
+import * as realFirebase from 'firebase';
 
 
 import {
@@ -21,7 +23,7 @@ import {
   DropdownMenu,
   DropdownItem } from 'reactstrap';
 
-
+  require('firebase/auth');
 /*const Navigation = ({ authUser }) =>
   <div>
     { authUser
@@ -45,6 +47,7 @@ const NavigationNonAuth = () =>
   </ul>
 */
 
+
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -64,6 +67,8 @@ class NavBar extends React.Component {
     });
   }
 
+
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -71,7 +76,14 @@ class NavBar extends React.Component {
   }
 
   render() {
- 
+    firebase.auth.onAuthStateChanged(function(authUser) {
+      var user = realFirebase.auth().currentUser;
+      if (authUser ) {
+        console.log(authUser);
+      } else {
+        console.log('No user is signed in');
+      }
+    });
         if (this.state.authUser) {
             return(
             <div>
@@ -91,18 +103,18 @@ class NavBar extends React.Component {
                   </NavItem>
                   <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
-                    <h5>My name</h5>
+                    <h4>{this.state.authUser.email}</h4>
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem>
-                        Overview
+                        <NavLink href="/settings/">Settings</NavLink>
                       </DropdownItem>
                       <DropdownItem>
                       <NavLink href="/Account/">My Account</NavLink>
                       </DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem>
-                        Sign Out
+                        <NavLink onClick={auth.doSignOut}>Sign Out </NavLink>
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>

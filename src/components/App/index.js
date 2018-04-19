@@ -8,6 +8,7 @@ import HomePage from '../Home';
 import AccountPage from '../Account';
 import ProjectPage from '../Projects';
 import AboutUsPage from '../AboutUs';
+import SettingsPage from '../Settings/settings';
 import withAuthentication from '../Session/withAuthentication';
 import * as routes from '../../constants/routes';
 import NavBar from '../NavBar';
@@ -27,6 +28,7 @@ const App = () =>
       <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
       <Route exact path={routes.PROJECTS} component={() => <ProjectPage />} />
       <Route exact path={routes.ABOUTUS} component={() => <AboutUsPage />} />
+      <Route exact path={routes.SETTINGS} component={() => <SettingsPage />} />
       <hr/>
     </div>
   </Router>
