@@ -21,7 +21,7 @@ const LandingPage = () =>
       <div class="jumbotron">
         <center>
           <h1>Seeding Solar</h1> 
-          <p>Here we will do godlike work together</p>
+          <p>Together we can save the world</p>
         </center>  
       </div>
       <center>
