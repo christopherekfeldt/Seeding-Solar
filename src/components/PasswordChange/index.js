@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import {Button} from 'reactstrap';
 import { auth } from '../../firebase';
 
 const updateByPropertyName = (propertyName, value) => () => ({
@@ -51,6 +51,7 @@ class PasswordChangeForm extends Component {
           value={passwordOne}
           onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
           type="password"
+          style={inputWindowStyles}
           placeholder="New Password"
         />
         </div>
@@ -59,17 +60,31 @@ class PasswordChangeForm extends Component {
           value={passwordTwo}
           onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
           type="password"
+          style={inputWindowStyles}
           placeholder="Confirm New Password"
         />
         </div>
-        <button disabled={isInvalid} type="submit">
-          Reset Password
-        </button>
+        <Button disabled={isInvalid} type="submit" style={buttonStyles}>
+          Change my Password
+        </Button>
 
         { error && <p>{error.message}</p> }
       </form>
     );
   }
 }
+
+const buttonStyles = {
+  marginTop: 20,
+  textColor: 'white',
+  backgroundColor: 'orange',
+  width: 180
+};
+
+const inputWindowStyles = {
+  marginTop: 20,
+  width: 320,
+  height: 40    
+};
 
 export default PasswordChangeForm;
