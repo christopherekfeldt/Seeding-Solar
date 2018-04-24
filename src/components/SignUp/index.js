@@ -7,7 +7,6 @@ import {
 import { auth, db } from '../../firebase';
 import * as routes from '../../constants/routes';
 
-
 const SignUpPage = ({ history }) =>
   <div>
     <center>
@@ -89,8 +88,6 @@ class SignUpForm extends Component {
         <input
           value={username}
           onChange={event => this.setState(updateByPropertyName('username', event.target.value))}
-          /*onChange={event => this.setState(updateByPropertyName('displayName', event.target.value))}*/
-         /* onChange={event => this.setState(setDisplayName(event.target.value))} */
           type="text"
           placeholder="Full Name"
         />

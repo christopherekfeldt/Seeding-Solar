@@ -7,10 +7,14 @@ const footerStyle = {
   height: 150
 };
 
-function Footer(/*props*/) {
+const footerTextStyle = {
+  marginTop: 40
+};
+
+function Footer() {
   return (
     <footer style={footerStyle}>
-        <Nav justified>
+        <Nav style={footerTextStyle} justified>
           <NavItem
             eventKey={1}>
             Contact
