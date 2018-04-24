@@ -6,6 +6,7 @@ const footerStyle = {
   backgroundColor: 'grey',
   height: 150
 };
+
 function Footer(/*props*/) {
   return (
     <footer style={footerStyle}>

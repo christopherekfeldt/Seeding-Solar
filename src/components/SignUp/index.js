@@ -6,7 +6,7 @@ import {
 
 import { auth, db } from '../../firebase';
 import * as routes from '../../constants/routes';
-import { setDisplayName } from 'recompose';
+
 
 const SignUpPage = ({ history }) =>
   <div>
@@ -46,7 +46,7 @@ class SignUpForm extends Component {
       history,
     } = this.props;
 
-    auth.doCreateUserWithEmailAndPassword(email, passwordOne).setDisplayName(username)
+    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
 
         // Create a user in your own accessible Firebase Database too
@@ -58,13 +58,14 @@ class SignUpForm extends Component {
           .catch(error => {
             this.setState(updateByPropertyName('error', error));
           });
+          
+
       })
       .catch(error => {
         this.setState(updateByPropertyName('error', error));
       });
 
     event.preventDefault();
-
   }
 
   render() {
