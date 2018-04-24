@@ -1,20 +1,32 @@
 import React from 'react';
-import {  Nav, NavItem } from 'reactstrap';
+import {  Nav, NavItem, NavLink } from 'reactstrap';
 
 const footerStyle = {
-  color: 'black',
-  backgroundColor: 'grey',
-  height: 150
+  color: 'white',
+  backgroundColor: 'black',
+  height: 200
 };
 
-const footerTextStyle = {
-  marginTop: 40
+const footerTextStyleFirst = {
+  marginTop: 20,
+  color: 'grey'
 };
 
+const footerTextStyleSecond = {
+  marginTop: 20
+};
+
+const copyrightStyle ={
+  marginTop: 20
+}
+
+const NavLinkStyle ={
+  color: 'white'
+}
 function Footer() {
   return (
     <footer style={footerStyle}>
-        <Nav style={footerTextStyle} justified>
+        <Nav style={footerTextStyleFirst} justified>
           <NavItem
             eventKey={1}>
             Contact
@@ -31,19 +43,19 @@ function Footer() {
         </Nav>
 
 
-          <Nav justified>
+          <Nav style={footerTextStyleSecond} justified>
           <NavItem
             eventKey={1}>
-            Email
+            <NavLink style={NavLinkStyle} href='/Contact/'>Email</NavLink>
           </NavItem>
           <NavItem
             eventKey={2}
             title="Item">
-            Terms & Conditions
+            <NavLink style={NavLinkStyle} href='/Contact/'>Terms & Conditions</NavLink>
           </NavItem>
           <NavItem
             eventKey={3}>
-            Facebook
+            <NavLink style={NavLinkStyle} href='/Contact/'>Facebook</NavLink>
           </NavItem>
         </Nav>
 
@@ -52,22 +64,22 @@ function Footer() {
           <Nav justified>
           <NavItem
             eventKey={1}>
-            Phone
+            <NavLink style={NavLinkStyle} href='/Contact/'>Phone</NavLink>
           </NavItem>
           <NavItem
             eventKey={2}
             title="Item">
-            Privacy policy
+            <NavLink style={NavLinkStyle} href='/Contact/'>Privacy policy</NavLink>
           </NavItem>
           <NavItem
             eventKey={3}>
-            Instagram
+            <NavLink style={NavLinkStyle} href='/Contact/'>Instagram</NavLink>
           </NavItem>
         </Nav>
 
 
 
-        <div className="text-center small copyright">
+        <div style={copyrightStyle} className="text-center small copyright">
           © RLM 2016
         </div>
     </footer>
