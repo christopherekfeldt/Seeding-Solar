@@ -3,14 +3,14 @@ import {
   Link,
   withRouter,
 } from 'react-router-dom';
-
+import {Button} from 'reactstrap';
 import { auth, db } from '../../firebase';
 import * as routes from '../../constants/routes';
 
 const SignUpPage = ({ history }) =>
   <div>
     <center>
-      <h1>SignUp</h1>
+      <h3>Sign Up</h3>
       <SignUpForm history={history} />
     </center>
   </div>
@@ -89,6 +89,7 @@ class SignUpForm extends Component {
           value={username}
           onChange={event => this.setState(updateByPropertyName('username', event.target.value))}
           type="text"
+          style={inputWindowStyles}
           placeholder="Full Name"
         />
         </div>
@@ -97,6 +98,7 @@ class SignUpForm extends Component {
           value={email}
           onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
           type="text"
+          style={inputWindowStyles}
           placeholder="Email Address"
         />
         </div>
@@ -105,6 +107,7 @@ class SignUpForm extends Component {
           value={passwordOne}
           onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
           type="password"
+          style={inputWindowStyles}
           placeholder="Password"
         />
         </div>
@@ -113,18 +116,33 @@ class SignUpForm extends Component {
           value={passwordTwo}
           onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
           type="password"
+          style={inputWindowStyles}
           placeholder="Confirm Password"
         />
         </div>
-        <button disabled={isInvalid} type="submit">
-          Sign Up
-        </button>
+        <Button disabled={isInvalid} type="submit" style={buttonStyles}>
+              Sign Up
+        </Button>
 
         { error && <p>{error.message}</p> }
       </form>
     );
   }
 }
+
+const buttonStyles = {
+  marginTop: 20,
+  textColor: 'white',
+  backgroundColor: 'orange',
+  width: 120
+};
+
+const inputWindowStyles = {
+  marginTop: 20,
+  width: 320,
+  height: 40    
+};
+
 
 const SignUpLink = () =>
   <p>

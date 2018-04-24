@@ -117,8 +117,8 @@ const buttonStyles = {
 
 const inputWindowStyles = {
   marginTop: 20,
-  width: 350,
-  height: 50    
+  width: 320,
+  height: 40    
 };
 
 export default withRouter(SignInPage);
