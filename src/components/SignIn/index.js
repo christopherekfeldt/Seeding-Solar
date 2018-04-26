@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-
+import {Button} from 'reactstrap';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { auth } from '../../firebase';
@@ -11,10 +11,16 @@ const SignInPage = ({ history }) =>
     <center>
       <h3>Sign In</h3>
       <SignInForm history={history} />
+      <div style={paddingStyles}>
       <PasswordForgetLink />
       <SignUpLink />
+      </div>
     </center>
   </div>
+
+const paddingStyles = {
+  marginTop: 20
+};
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -68,13 +74,14 @@ class SignInForm extends Component {
       email === '';
 
     return (
-      <center>
         <form onSubmit={this.onSubmit}>
+          <center>
           <div>
-          <input
+          <input 
             value={email}
             onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
             type="text"
+            style={inputWindowStyles}
             placeholder="Email Address"
           />
           </div>
@@ -83,19 +90,36 @@ class SignInForm extends Component {
             value={password}
             onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
             type="password"
+            style={inputWindowStyles}
             placeholder="Password"
           />
           </div>
-          <button disabled={isInvalid} type="submit">
-            Sign In
-          </button>
-
+          </center>
+          <div>
+            <Button disabled={isInvalid} type="submit" style={buttonStyles}>
+              Sign In
+            </Button>
+          </div>
           { error && <p>{error.message}</p> }
         </form>
-      </center>
+      
     );
   }
 }
+
+const buttonStyles = {
+  marginLeft: 230,
+  marginTop: 20,
+  textColor: 'white',
+  backgroundColor: 'orange',
+  width: 120
+};
+
+const inputWindowStyles = {
+  marginTop: 20,
+  width: 320,
+  height: 40    
+};
 
 export default withRouter(SignInPage);
 

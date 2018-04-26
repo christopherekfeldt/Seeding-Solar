@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {firebase, auth, db} from '../../firebase';
 import { connect } from 'react-redux';

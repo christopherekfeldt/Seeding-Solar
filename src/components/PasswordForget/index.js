@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import {Button} from 'reactstrap';
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 
 const PasswordForgetPage = () =>
   <div>
-    <h1>PasswordForget</h1>
+    <center>
+    <h3>Forgot your password?</h3>
     <PasswordForgetForm />
+    </center>
   </div>
 
 const updateByPropertyName = (propertyName, value) => () => ({
@@ -50,21 +52,37 @@ class PasswordForgetForm extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
+        <div>
         <input
           value={this.state.email}
           onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
           type="text"
+          style={inputWindowStyles}
           placeholder="Email Address"
         />
-        <button disabled={isInvalid} type="submit">
-          Reset My Password
-        </button>
+        </div>
+        <Button disabled={isInvalid} type="submit" style={buttonStyles}>
+          Reset my Password
+        </Button>
 
         { error && <p>{error.message}</p> }
       </form>
     );
   }
 }
+
+const buttonStyles = {
+  marginTop: 20,
+  textColor: 'white',
+  backgroundColor: 'orange',
+  width: 180
+};
+
+const inputWindowStyles = {
+  marginTop: 20,
+  width: 320,
+  height: 40    
+};
 
 const PasswordForgetLink = () =>
   <p>

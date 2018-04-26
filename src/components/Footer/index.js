@@ -80,7 +80,7 @@ function Footer() {
 
 
         <div style={copyrightStyle} className="text-center small copyright">
-          © RLM 2016
+          © Seeding Solar 2018
         </div>
     </footer>
   );
