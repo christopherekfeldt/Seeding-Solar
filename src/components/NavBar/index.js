@@ -23,34 +23,39 @@ import {
   DropdownItem } from 'reactstrap';
 
 
+
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+
+
     this.state = {
       authUser: null,
       isOpen: false,
-      username: '',
+      username: ''
     };
   }
 
-  /*componentWillMount() {
-      var uid = firebase.auth.currentUser.uid;
-      console.log(uid);
-      firebase.db.ref('users/' + uid).once('value').then(function(snapshot) {
-        this.setState({
-          username: snapshot.val().username
-        });
-      })}*/
 
   componentDidMount() {
     firebase.auth.onAuthStateChanged(authUser => {
-      authUser
-        ? this.setState(() => ({authUser}))
-        : this.setState(() => ({authUser: null}));
+      if(authUser){
+        
+        this.setState({authUser});
+        let uid = realFirebase.auth().currentUser.uid;
+        
+        firebase.db.ref('users/' + uid).once('value').then(function(snapshot) {
+         var username = (snapshot.val() && snapshot.val().username);
+         this.setState({username});
+        }.bind(this));
+      } else {
+        this.setState({authUser : null})
+      }
     });
   }
+      
 
 
 
@@ -60,19 +65,16 @@ class NavBar extends React.Component {
     });
   }
 
+  
+
   render() {
-    firebase.auth.onAuthStateChanged(function(authUser) {
-      var user = realFirebase.auth().currentUser;
-      if (authUser ) {
-        console.log(authUser);
-      } else {
-        console.log('No user is signed in');
-      }
-    });
+ 
+  
+
         if (this.state.authUser) {
             return(
             <div>
-            <Navbar color="faded" light expand="md">
+              <Navbar fixed="top" color="faded" light expand="md">
               <NavbarBrand href="/"><h3>Seeding Solar</h3></NavbarBrand>
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.state.isOpen} navbar>
@@ -88,7 +90,7 @@ class NavBar extends React.Component {
                   </NavItem>
                   <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
-                      <h5>{this.state.authUser.email}</h5>
+                      <h4>{this.state.username}</h4>
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem>
@@ -112,7 +114,7 @@ class NavBar extends React.Component {
         } else {
            return(
             <div>
-            <Navbar color="faded" light expand="md">
+            <Navbar fixed="top" color="faded" light expand="md">
               <NavbarBrand href="/"><h3>Seeding Solar</h3></NavbarBrand>
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.state.isOpen} navbar>
