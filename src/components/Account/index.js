@@ -9,6 +9,7 @@ import {Button} from 'reactstrap';
 import { auth, db, firebase } from '../../firebase';
 import * as routes from '../../constants/routes';
 import * as realFirebase from 'firebase';
+import { isNumber } from 'util';
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -18,32 +19,37 @@ const updateByPropertyName = (propertyName, value) => () => ({
 class Account extends Component {
   constructor(props) {
     super(props);
-    this.MakeInvestment = this.MakeInvestment.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      investment: 0
+      investment: 0,
+      formerInvestment: 0, 
+      value: 0
     };
   }
 
-  MakeInvestment() {
-    let uid = realFirebase.auth().currentUser.uid;
-    console.log('uid');
-    console.log(uid);
-
-    firebase.db.ref('users/' + uid).once('value',function(snapshot) {
-      var updates = {};
-      var temp = snapshot.val().account;
-      console.log(temp);
-      updates[snapshot.key + '/account'] = temp + this.state.account;
-      
-    firebase.db.ref('users/' + uid).update(updates);
-    });
+  handleChange(event) {
+    this.setState({investment: event.target.value});
   }
 
   onSubmit = (event) => {
-    this.MakeInvestment;
+    let uid = realFirebase.auth().currentUser.uid;
+    var temp = this.state.investment;
+    var temp2 = this.state.formerInvestment;
+    var temp3 = temp -(-temp2);
+    firebase.db.ref('users/' + uid).update({account: temp3});
+
 }
-    
+
+  componentDidMount() {
+    let uid = realFirebase.auth().currentUser.uid;
+    firebase.db.ref('users/' + uid).once('value').then(function(snapshot){
+      var formerInvestment = (snapshot.val() && snapshot.val().account);
+      this.setState({formerInvestment});
+    }.bind(this));
+  }
   
   render() {
     const isInvalid = 
@@ -57,8 +63,8 @@ class Account extends Component {
         <form onSubmit={this.onSubmit}>
             <input
               value={this.state.investment}
-              onChange={event => this.setState(updateByPropertyName('investment', event.target.value))}
-              type="text"
+              onChange = {this.handleChange} 
+              type="number"
               style={inputWindowStyles}
               placeholder="Investment"
             />
