@@ -36,10 +36,10 @@ class Account extends Component {
 
   onSubmit = (event) => {
     let uid = realFirebase.auth().currentUser.uid;
-    var temp = this.state.investment;
-    var temp2 = this.state.formerInvestment;
-    var temp3 = temp -(-temp2);
-    firebase.db.ref('users/' + uid).update({account: temp3});
+    var investment = this.state.investment;
+    var formerInvestment = this.state.formerInvestment;
+    var sum = investment -(-formerInvestment);
+    firebase.db.ref('users/' + uid).update({account: sum});
 
 }
 
@@ -54,7 +54,8 @@ class Account extends Component {
   render() {
     const isInvalid = 
       this.state.investment === '' ||
-      this.state.investment === 0;
+      this.state.investment === 0 ||
+      this.state.investment < 1;
 
     return(
       <div>
@@ -65,6 +66,7 @@ class Account extends Component {
               value={this.state.investment}
               onChange = {this.handleChange} 
               type="number"
+              min="0"
               style={inputWindowStyles}
               placeholder="Investment"
             />
