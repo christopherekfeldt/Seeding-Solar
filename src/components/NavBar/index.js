@@ -65,7 +65,7 @@ class NavBar extends React.Component {
   }
 
   
-
+ //<Navbar fixed="top" color="faded" light expand="md">
   render() {
  
   
@@ -73,7 +73,8 @@ class NavBar extends React.Component {
         if (this.state.authUser) {
             return(
             <div>
-              <Navbar fixed="top" color="faded" light expand="md">
+
+              <Navbar color="faded" light expand="md">
               <NavbarBrand href="/"><h3>Seeding Solar</h3></NavbarBrand>
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.state.isOpen} navbar>
@@ -113,7 +114,7 @@ class NavBar extends React.Component {
         } else {
            return(
             <div>
-            <Navbar fixed="top" color="faded" light expand="md">
+            <Navbar color="faded" light expand="md">
               <NavbarBrand href="/"><h3>Seeding Solar</h3></NavbarBrand>
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.state.isOpen} navbar>
