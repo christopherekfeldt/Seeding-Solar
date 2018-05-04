@@ -15,6 +15,10 @@ const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
 });
 
+export const INITIAL_INVESTMENT = {
+  investment: '',
+  date: ''
+};
 
 class Account extends Component {
   constructor(props) {
@@ -24,38 +28,38 @@ class Account extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      investment: 0,
-      formerInvestment: 0, 
-      value: 0
+      account: 0,
+      formeraccount: 0
+    
     };
   }
 
   handleChange(event) {
-    this.setState({investment: event.target.value});
+    this.setState({account: event.target.value});
   }
 
   onSubmit = (event) => {
     let uid = realFirebase.auth().currentUser.uid;
-    var investment = this.state.investment;
-    var formerInvestment = this.state.formerInvestment;
-    var sum = investment -(-formerInvestment);
+    var account = this.state.account;
+    var formeraccount = this.state.formeraccount;
+    var sum = account -(-formeraccount);
     firebase.db.ref('users/' + uid).update({account: sum});
-
+    //firebase.db.ref('users/' + uid + '/investments').set()
 }
 
   componentDidMount() {
     let uid = realFirebase.auth().currentUser.uid;
     firebase.db.ref('users/' + uid).once('value').then(function(snapshot){
-      var formerInvestment = (snapshot.val() && snapshot.val().account);
-      this.setState({formerInvestment});
+      var formeraccount = (snapshot.val() && snapshot.val().account);
+      this.setState({formeraccount});
     }.bind(this));
   }
   
   render() {
     const isInvalid = 
-      this.state.investment === '' ||
-      this.state.investment === 0 ||
-      this.state.investment < 1;
+      this.state.account === '' ||
+      this.state.account === 0 ||
+      this.state.account < 1;
 
     return(
       <div>
@@ -63,7 +67,7 @@ class Account extends Component {
         <h4>Account</h4>  
         <form onSubmit={this.onSubmit}>
             <input
-              value={this.state.investment}
+              value={this.state.account}
               onChange = {this.handleChange} 
               type="number"
               min="0"
