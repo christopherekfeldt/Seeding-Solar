@@ -11,14 +11,20 @@ import * as routes from '../../constants/routes';
 import * as realFirebase from 'firebase';
 import { isNumber } from 'util';
 
+
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
 });
 
-export const INITIAL_INVESTMENT = {
+/*export const INITIAL_INVESTMENT = {
   investment: '',
   date: ''
-};
+};*/
+
+/*const doCreateInvestment = (uid, investment, date) => db.ref('users/' + uid + '/investments').set({
+  investment,
+  date,
+})*/
 
 class Account extends Component {
   constructor(props) {
@@ -44,8 +50,9 @@ class Account extends Component {
     var formeraccount = this.state.formeraccount;
     var sum = account -(-formeraccount);
     firebase.db.ref('users/' + uid).update({account: sum});
-    //firebase.db.ref('users/' + uid + '/investments').set()
-}
+    var todaysDate = getTodaysDate(); 
+    firebase.db.ref('users/' + uid + '/investments').push().set({account, todaysDate});
+  }
 
   componentDidMount() {
     let uid = realFirebase.auth().currentUser.uid;
@@ -100,7 +107,6 @@ const inputWindowStyles = {
   height: 40    
 };
 
-
 const mapStateToProps = (state) => ({
   authUser: state.sessionState.authUser,
 });
@@ -111,3 +117,17 @@ export default compose(
   withAuthorization(authCondition),
   connect(mapStateToProps)
 )(Account);
+
+function getTodaysDate(){
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear();
+  if (dd < 10){
+      dd = '0' + dd;
+  }
+  if (mm < 10){
+      mm = '0' + mm;
+  }
+return today = dd + '/' + mm + '/' + yyyy;
+}

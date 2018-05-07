@@ -6,7 +6,7 @@ import {
 import {Button} from 'reactstrap';
 import { auth, db } from '../../firebase';
 import * as routes from '../../constants/routes';
-import { INITIAL_INVESTMENT } from '../Account';
+//import { INITIAL_INVESTMENT } from '../Account';
 
 const SignUpPage = ({ history }) =>
   <div>
@@ -25,9 +25,7 @@ const INITIAL_STATE = {
   email: '',
   passwordOne: '',
   passwordTwo: '',
-  investments: {
-    investment: INITIAL_INVESTMENT
-    },
+  investments: 0,
   account: 0,
   panelsPerMonth: {
     panel: '',
@@ -176,3 +174,4 @@ export {
   SignUpForm,
   SignUpLink,
 };
+

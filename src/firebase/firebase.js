@@ -1,6 +1,7 @@
 import * as firebase from 'firebase';
 import updateAccount from '../simulation/updateAccount';
 import SetInterval from 'set-interval';
+
 const config = {
   apiKey: "AIzaSyDPj0BZVQebAYww_VUFXhbEXPP-n2gq120",
   authDomain: "seeding-solar.firebaseapp.com",
@@ -12,7 +13,7 @@ const config = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
- //SetInterval.start(updateAccount, 20000, 'updateAccount');
+  //SetInterval.start(updateAccount, 10000, 'updateAccount');
 }
 
 
