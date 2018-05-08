@@ -129,5 +129,5 @@ function getTodaysDate(){
   if (mm < 10){
       mm = '0' + mm;
   }
-return today = dd + '/' + mm + '/' + yyyy;
+return today = dd + '-' + mm + '-' + yyyy;
 }

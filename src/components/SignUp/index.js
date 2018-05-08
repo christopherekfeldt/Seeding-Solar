@@ -27,9 +27,7 @@ const INITIAL_STATE = {
   passwordTwo: '',
   investments: 0,
   account: 0,
-  panelsPerMonth: {
-    panel: '',
-  },
+  panelsPerMonth: 0,
   activePanels: 0,
   soldPanels: 0,
   reducedCO2: 0,
