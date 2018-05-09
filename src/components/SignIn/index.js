@@ -108,7 +108,6 @@ class SignInForm extends Component {
 }
 
 const buttonStyles = {
-  marginLeft: 230,
   marginTop: 20,
   textColor: 'white',
   backgroundColor: 'orange',
