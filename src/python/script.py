@@ -45,64 +45,69 @@ def main():
     #getPanelsPerMonth()
     #print(users.val())
     #calcPanelsPerMonth()
-    #addPanelsPerMonth()
+    #addPanelsPerMonth("GmUvyPwBX0dWiFawH3FGcc45P5l1")
     #removeOldPanels(userId)
     #getAllPanels("GmUvyPwBX0dWiFawH3FGcc45P5l1")
-    #updateDatabase()
+    updateDatabase()
     #sumActivePanels("GmUvyPwBX0dWiFawH3FGcc45P5l1")
     #setActivePanels("GmUvyPwBX0dWiFawH3FGcc45P5l1")
     #monthlySumPayBack("GmUvyPwBX0dWiFawH3FGcc45P5l1")
-    getUserAccount("GmUvyPwBX0dWiFawH3FGcc45P5l1")
+    #getUserAccount("GmUvyPwBX0dWiFawH3FGcc45P5l1")
+    #updateAccount("GmUvyPwBX0dWiFawH3FGcc45P5l1")
+    #calcPanelsPerMonth("GmUvyPwBX0dWiFawH3FGcc45P5l1")
+    #updateSoldPanels("GmUvyPwBX0dWiFawH3FGcc45P5l1")
+    #reducedAccount("GmUvyPwBX0dWiFawH3FGcc45P5l1")
+
 
 #---------------------------------------------------------------------#
-
-#--------GET ALL ACCOUNT VALUES---------------------------------------#
-def getAccounts():
-    users = db.child("users").get()
-    for user in users.each():
-        userId = user.key()
-        account = db.child("users").child(userId).child("account").get()
-        print( account.val() )
-
-#--------GET ONE USERS ACCOUNT VALUE---------------------------------------#
-def getUserAccount(userId):
-    account = db.child("users").child(userId).child("account").get()
-    print (account.val())
-    return account
-
-
-#-----------------------------------------------#
-#def updateAccount():
-
-
-#-----------CALCULATES AND RETURN A USERS MONTLY PAYBACK ON SUNPANELS--------------#
-def monthlySumPayBack(userId):
-    monthlySumPayBack = sumActivePanels(userId) * paybackPerMonth
-    print (monthlySumPayBack)
-    return monthlySumPayBack 
-
-#-----------ADD PANELS TO panelsPerMonth----------------------------------------#
-
-def addPanelsPerMonth():
-    users = db.child("users").get()
-    for user in users.each():
-        userId = user.key()
-        #panels första värde skall uppdateras med värdet ifrån calcPanelsPerMonth()
-        panel = {"NumberOfPanels": 100, "DateOfUpdate": todaystr}
-        db.child("users").child(userId).child("panelsPerMonth").push(panel)
-
-#-------------------------------------#
 def updateDatabase():
     users = db.child("users").get()
     for user in users.each():
         userId = user.key()
         removeOldPanels(userId)
-#-------------------------------------#
-def getUserId():
-    users = db.child("users").get()
-    for user in users.each():
-        userId = user.key()
-        return userId
+        setActivePanels(userId)
+        updateAccount(userId)
+        updateSoldPanels(userId)
+        addPanelsPerMonth(userId)
+        reducedAccount(userId)
+
+#--------GET ONE USERS ACCOUNT VALUE---------------------------------------#
+def getUserAccount(userId):
+    account = db.child("users").child(userId).child("account").get()
+    #print (account.val())
+    return account.val()
+
+
+#-----------------------------------------------#
+def updateAccount(userId):
+    newAccount = getUserAccount(userId) + monthlySumPayBack(userId)
+    db.child("users").child(userId).update({"account": newAccount})
+
+
+#-----------------------------------------------#
+def reducedAccount(userId):
+    account = db.child("users").child(userId).child("account").get()
+    costForNewPanels = calcPanelsPerMonth(userId) * costPerPanel
+    account = account.val() - costForNewPanels
+    account = db.child("users").child(userId).update({"account": account})
+
+#-----------CALCULATES AND RETURN A USERS MONTLY PAYBACK ON SUNPANELS--------------#
+def monthlySumPayBack(userId):
+    monthlySumPayBack = sumActivePanels(userId) * paybackPerMonth
+    #print (monthlySumPayBack)
+    return monthlySumPayBack 
+#---------------------------------------------------------------------------------#
+def updateSoldPanels(userId):
+    previousAmountSoldPanels = db.child("users").child(userId).child("soldPanels").get()
+    soldPanels = calcPanelsPerMonth(userId) + previousAmountSoldPanels.val()
+    db.child("users").child(userId).update({"soldPanels": soldPanels})
+
+#-----------ADD PANELS TO panelsPerMonth----------------------------------------#
+
+def addPanelsPerMonth(userId):
+    panel = {"NumberOfPanels": calcPanelsPerMonth(userId), "DateOfUpdate": todaystr}
+    db.child("users").child(userId).child("panelsPerMonth").push(panel)
+
 #-------------GET ALL PANELS FOR ONE USER------------------------#
 
 def getAllPanels(userId):
@@ -134,20 +139,22 @@ def removeOldPanels(userId):
         panelId = eachpanel.key()
         panelDate = db.child("users").child(userId).child("panelsPerMonth").child(panelId).child("DateOfUpdate").get()
         dateOfUpdate = datetime.datetime.strptime(panelDate.val(), "%Y-%m-%d")
-        print (dateOfUpdate)
+        #print (dateOfUpdate)
         outDated = today - timedelta(weeks=104)
         outDated = datetime.datetime.strftime(outDated, "%Y-%m-%d")
         outDated = datetime.datetime.strptime(outDated, "%Y-%m-%d")
-        print ("two years ago: ", outDated)
+        #print ("two years ago: ", outDated)
         if (dateOfUpdate < outDated):
             db.child("users").child(userId).child("panelsPerMonth").child(panelId).remove()
 
 #-----------CALCULATE AMOUNT OF PANELS DEPENDING ON SIZE OF INVESTMENT----------#
 
-#def calcPanelsPerMonth():
- #   removeOldPanels()
-  #  account = getAccounts()
-
-   # print (account.val())
+def calcPanelsPerMonth(userId):
+    account = getUserAccount(userId)
+    numberOfNewPanels = (account/costPerPanel)
+    numberOfNewPanels = int(numberOfNewPanels) #rounds up float to integer
+    #print (numberOfNewPanels)
+    return numberOfNewPanels
+   
 #------------RUNS MAIN---------------------#
 main()
