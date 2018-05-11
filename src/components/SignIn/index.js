@@ -98,6 +98,22 @@ class SignInForm extends Component {
   }
 }
 
+<<<<<<< HEAD
+=======
+const buttonStyles = {
+  marginTop: 20,
+  textColor: 'white',
+  backgroundColor: 'orange',
+  width: 120
+};
+
+const inputWindowStyles = {
+  marginTop: 20,
+  width: 320,
+  height: 40    
+};
+
+>>>>>>> c5fd4076aff60287fcd9624f8da8f2795ef00d51
 export default withRouter(SignInPage);
 
 export {

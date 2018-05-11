@@ -12,10 +12,20 @@ import * as realFirebase from 'firebase';
 import { isNumber } from 'util';
 import showWeather from '../GetWeatherData';
 
+
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
 });
 
+/*export const INITIAL_INVESTMENT = {
+  investment: '',
+  date: ''
+};*/
+
+/*const doCreateInvestment = (uid, investment, date) => db.ref('users/' + uid + '/investments').set({
+  investment,
+  date,
+})*/
 
 class Account extends Component {
   constructor(props) {
@@ -25,38 +35,45 @@ class Account extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      investment: 0,
-      formerInvestment: 0, 
-      value: 0
+      account: 0,
+      formeraccount: 0
+    
     };
   }
 
   handleChange(event) {
-    this.setState({investment: event.target.value});
+    this.setState({account: event.target.value});
   }
 
   onSubmit = (event) => {
     let uid = realFirebase.auth().currentUser.uid;
-    var temp = this.state.investment;
-    var temp2 = this.state.formerInvestment;
-    var temp3 = temp -(-temp2);
-    firebase.db.ref('users/' + uid).update({account: temp3});
-
-}
+    var account = this.state.account;
+    var formeraccount = this.state.formeraccount;
+    var sum = account -(-formeraccount);
+    firebase.db.ref('users/' + uid).update({account: sum});
+    var todaysDate = getTodaysDate(); 
+    firebase.db.ref('users/' + uid + '/investments').push().set({account, todaysDate});
+  }
 
   componentDidMount() {
     let uid = realFirebase.auth().currentUser.uid;
     firebase.db.ref('users/' + uid).once('value').then(function(snapshot){
-      var formerInvestment = (snapshot.val() && snapshot.val().account);
-      this.setState({formerInvestment});
+      var formeraccount = (snapshot.val() && snapshot.val().account);
+      this.setState({formeraccount});
     }.bind(this));
   }
   
   render() {
     const isInvalid = 
+<<<<<<< HEAD
       this.state.investment === '' ||
       this.state.investment === 0;
       showWeather();
+=======
+      this.state.account === '' ||
+      this.state.account === 0 ||
+      this.state.account < 1;
+>>>>>>> c5fd4076aff60287fcd9624f8da8f2795ef00d51
 
     return(
       <div>
@@ -64,9 +81,10 @@ class Account extends Component {
         <h4>Account</h4>  
         <form onSubmit={this.onSubmit}>
             <input
-              value={this.state.investment}
+              value={this.state.account}
               onChange = {this.handleChange} 
               type="number"
+              min="0"
               style={inputWindowStyles}
               placeholder="Investment"
             />
@@ -96,7 +114,6 @@ const inputWindowStyles = {
   height: 40    
 };
 
-
 const mapStateToProps = (state) => ({
   authUser: state.sessionState.authUser,
 });
@@ -107,3 +124,17 @@ export default compose(
   withAuthorization(authCondition),
   connect(mapStateToProps)
 )(Account);
+
+function getTodaysDate(){
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear();
+  if (dd < 10){
+      dd = '0' + dd;
+  }
+  if (mm < 10){
+      mm = '0' + mm;
+  }
+return today = dd + '-' + mm + '-' + yyyy;
+}

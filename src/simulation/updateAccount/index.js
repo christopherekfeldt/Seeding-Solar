@@ -7,19 +7,52 @@ function updateAccount (){
     firebase.db.ref('users/').once('value', function(snapshot) {
         var updates = {};
         snapshot.forEach(function(childSnapshot) {
-            var temp = childSnapshot.val().test;
-            updates[childSnapshot.key + '/test'] = temp + 3;
+            var account = childSnapshot.val().account;
+            var investments = childSnapshot.val().investments;
+            updates[childSnapshot.key + '/account'] = account;// -(-investments);
             firebase.db.ref('/users').update(updates);
-
-            
         });
     });
     firebase.db.ref('users/').once('value', function(snapshot) {
         snapshot.forEach(function(childSnapshot){
-            console.log(childSnapshot.val().test);
+            console.log(childSnapshot.val().account);
+            getTodaysDate();
         });
     });
 }
+
+function getTodaysDate(){
+    var today = new Date();
+    /*var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+    if (dd < 10){
+        '0' + dd;
+    }
+    if (mm < 10){
+        '0' + mm;
+    }
+    today = dd + '/' + mm + '/' + yyyy;*/
+    console.log(today);
+}
+
+function updatePanelsPerMonth (){
+    firebase.db.ref('users/').once('value', function(snapshot) {
+        var updates = {};
+        snapshot.forEach(function(childSnapshot) {
+
+        }) 
+    })
+}
+
+/*function updateSoldPanels () {
+    firebase.db.ref('users/').once('value', function(snapshot) {
+        var updates = {};
+        snapshot.forEach(function(childSnapshot){
+
+        })
+    })
+}*/
 
 
 
