@@ -39,8 +39,8 @@ def main():
     #getPanelsPerMonth()
     #print(users.val())
     #calcPanelsPerMonth()
-    #addPanelsPerMonth()
-    removeOldPanels()
+    addPanelsPerMonth()
+    #removeOldPanels()
 #---------------------------------------------------------------------#
 
 #--------GET ALL ACCOUNT VALUES---------------------------------------#
@@ -60,7 +60,7 @@ def addPanelsPerMonth():
     for user in users.each():
         userId = user.key()
         #panels första värde skall uppdateras med värdet ifrån calcPanelsPerMonth()
-        panel = {"panel": "100", "date": today}
+        panel = {"NumberOfPanels": "100", "DateOfUpdate": today}
         db.child("users").child(userId).child("panelsPerMonth").push(panel)
 
 #-------------ITERATE THROUGH AND REMOVE ALL OUTDATED PANELS------------------------#
