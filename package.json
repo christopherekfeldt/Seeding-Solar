@@ -16,6 +16,7 @@
     "reactstrap": "^5.0.0-beta.3",
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
+    "request": "^2.85.0",
     "set-interval": "^2.0.1"
   },
   "scripts": {
