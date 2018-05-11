@@ -6,5 +6,6 @@
         "-p",
         "test*.py"
     ],
-    "python.unitTest.unittestEnabled": true
+    "python.unitTest.unittestEnabled": true,
+    "git.ignoreLimitWarning": true
 }

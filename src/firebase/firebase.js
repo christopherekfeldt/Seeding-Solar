@@ -13,7 +13,7 @@ const config = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
-  //SetInterval.start(updateAccount, 10000, 'updateAccount');
+ //SetInterval.start(updateAccount, 20000, 'updateAccount');
 }
 
 
