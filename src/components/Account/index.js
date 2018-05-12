@@ -65,15 +65,9 @@ class Account extends Component {
   
   render() {
     const isInvalid = 
-<<<<<<< HEAD
-      this.state.investment === '' ||
-      this.state.investment === 0;
-      showWeather();
-=======
       this.state.account === '' ||
       this.state.account === 0 ||
       this.state.account < 1;
->>>>>>> c5fd4076aff60287fcd9624f8da8f2795ef00d51
 
     return(
       <div>
