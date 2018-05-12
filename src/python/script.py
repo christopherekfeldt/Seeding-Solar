@@ -2,16 +2,6 @@ import pyrebase
 import datetime
 from datetime import timedelta,date,time
 
-
-#import json
-
-#class DateTimeEncoder(json.JSONEncoder):
- #   def default(self, o):
-  #      if isinstance(o, datetime):
-   #         return o.isoformat()
-#
- #       return json.JSONEncoder.default(self, o)
-
 #----------------FIREBASE KOPPLING--------------------#
 config = {
   "apiKey": "AIzaSyDPj0BZVQebAYww_VUFXhbEXPP-n2gq120",
@@ -46,7 +36,7 @@ def main():
     #print(users.val())
     #calcPanelsPerMonth()
     #addPanelsPerMonth("GmUvyPwBX0dWiFawH3FGcc45P5l1")
-    #removeOldPanels(userId)
+    #removeOldPanels("nt7tE9xTNyTMfWaYSKvvypa0CIN2")
     #getAllPanels("GmUvyPwBX0dWiFawH3FGcc45P5l1")
     updateDatabase()
     #sumActivePanels("GmUvyPwBX0dWiFawH3FGcc45P5l1")
@@ -119,11 +109,14 @@ def getAllPanels(userId):
 def sumActivePanels(userId):
     sum = 0
     panels = getAllPanels(userId)
-    for eachMonth in panels.each():
-        panelId = eachMonth.key()
-        test = db.child("users").child(userId).child("panelsPerMonth").child(panelId).child("NumberOfPanels").get()
-        sum = sum + test.val()
-    
+    if (panels.val() == 0):
+        pass
+    else:
+        for eachMonth in panels.each():
+            panelId = eachMonth.key()
+            test = db.child("users").child(userId).child("panelsPerMonth").child(panelId).child("NumberOfPanels").get()
+            sum = sum + test.val()
+        
     return sum
 
 #--------------SETS activePanels FOR EACH USER-----------------------#
@@ -134,18 +127,22 @@ def setActivePanels(userId):
 #-------------ITERATE THROUGH AND REMOVE ALL OUTDATED PANELS------------------------#
 
 def removeOldPanels(userId):
+    
     checkpanel = getAllPanels(userId)
-    for eachpanel in checkpanel.each():
-        panelId = eachpanel.key()
-        panelDate = db.child("users").child(userId).child("panelsPerMonth").child(panelId).child("DateOfUpdate").get()
-        dateOfUpdate = datetime.datetime.strptime(panelDate.val(), "%Y-%m-%d")
-        #print (dateOfUpdate)
-        outDated = today - timedelta(weeks=104)
-        outDated = datetime.datetime.strftime(outDated, "%Y-%m-%d")
-        outDated = datetime.datetime.strptime(outDated, "%Y-%m-%d")
-        #print ("two years ago: ", outDated)
-        if (dateOfUpdate < outDated):
-            db.child("users").child(userId).child("panelsPerMonth").child(panelId).remove()
+    if (checkpanel.val() == 0):
+        pass 
+    else:    
+        for eachpanel in checkpanel.each():
+            panelId = eachpanel.key()
+            panelDate = db.child("users").child(userId).child("panelsPerMonth").child(panelId).child("DateOfUpdate").get()
+            dateOfUpdate = datetime.datetime.strptime(panelDate.val(), "%Y-%m-%d")
+            #print (dateOfUpdate)
+            outDated = today - timedelta(weeks=104)
+            outDated = datetime.datetime.strftime(outDated, "%Y-%m-%d")
+            outDated = datetime.datetime.strptime(outDated, "%Y-%m-%d")
+            #print ("two years ago: ", outDated)
+            if (dateOfUpdate < outDated):
+                db.child("users").child(userId).child("panelsPerMonth").child(panelId).remove()
 
 #-----------CALCULATE AMOUNT OF PANELS DEPENDING ON SIZE OF INVESTMENT----------#
 
