@@ -9,7 +9,6 @@ const SettingPage = ({ authUser }) =>
   <div>
     <center>
     <h4>Account: {authUser.email}</h4>
-    <PasswordForgetForm />
     <PasswordChangeForm />
     </center>
   </div>
