@@ -62,7 +62,6 @@ def getSolarPanelEffect(epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, t
             effect = (0.25 - temperatureEffect(temperature)) * maxSolarPanelEffect
         else: 
             effect = (0.1 - temperatureEffect(temperature)) * maxSolarPanelEffect
-
     return effect
 #--------------------------------------------------------#
 def temperatureEffect(temperature):

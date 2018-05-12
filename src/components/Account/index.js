@@ -50,9 +50,9 @@ class Account extends Component {
     var formeraccount = this.state.formeraccount;
     var sum = account -(-formeraccount);
     firebase.db.ref('users/' + uid).update({account: sum});
-    var DateOfInvestment = getTodaysDate(); 
-    var Investment = account;
-    firebase.db.ref('users/' + uid + '/investments').push().set({Investment, DateOfInvestment});
+    var dateOfInvestment = getTodaysDate(); 
+    var investment = account;
+    firebase.db.ref('users/' + uid + '/investments').push().set({investment, dateOfInvestment});
   }
 
   componentDidMount() {
