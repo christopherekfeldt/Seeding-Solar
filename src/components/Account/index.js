@@ -10,6 +10,7 @@ import { auth, db, firebase } from '../../firebase';
 import * as routes from '../../constants/routes';
 import * as realFirebase from 'firebase';
 import { isNumber } from 'util';
+import showWeather from '../GetWeatherData';
 
 
 const updateByPropertyName = (propertyName, value) => () => ({
