@@ -120,12 +120,34 @@ class Account extends Component {
       this.state.account < 1;
 
     return(
-    <div>
-      <center>
-      
-        <h4>Account</h4>  
-        <h4>reducedCO2 = {this.state.carbonEmission}</h4>
-        <h4>People who got electricity = {this.state.peopleWithElectricity}</h4>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          
+          <h4>reducedCO2 = {this.state.carbonEmission}</h4>
+          <h4>People who got electricity = {this.state.peopleWithElectricity}</h4>
+        </div>
+          <div class="col">
+            <center>
+            <h4>Account</h4>  
+            <form onSubmit={this.onSubmit}>
+                <input
+                  value={this.state.account}
+                  onChange = {this.handleChange} 
+                  type="number"
+                  min="0"
+                  style={inputWindowStyles}
+                  placeholder="Investment"
+                />
+                <div>
+                <Button disabled={isInvalid} type="submit" style={buttonStyles}>
+                  Make Donation
+                </Button>
+                </div>
+            </form>
+            </center>
+        </div>
+        <div class="col">
         <ul>
         {this.state.formerInvestments.map(function(item, i){
           return (
@@ -136,25 +158,9 @@ class Account extends Component {
         })
       }
         </ul>
-        <form onSubmit={this.onSubmit}>
-            <input
-              value={this.state.account}
-              onChange = {this.handleChange} 
-              type="number"
-              min="0"
-              style={inputWindowStyles}
-              placeholder="Investment"
-            />
-            <div>
-            <Button disabled={isInvalid} type="submit" style={buttonStyles}>
-              Make Donation
-            </Button>
-            </div>
-          </form>
-
-
-    </center>
-    </div>
+        </div>
+        </div>
+      </div>
     );
   }
   
