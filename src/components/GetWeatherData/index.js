@@ -12,7 +12,7 @@ request(url, function (err, response, body) {
       console.log('error:', err);
     } else {
       let weather = JSON.parse(body)
-      let message = `cloud percent = ${weather.clouds.all} in ${weather.name} `;
+      let message = weather;
       console.log(message);
     }
   });
