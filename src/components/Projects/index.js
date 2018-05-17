@@ -6,9 +6,10 @@ const ProjectPage = () =>
   <div>
     <center>
       <h1>Projects</h1>
-    </center>  
+      </center>  
       <CardInfo />
       <ProgressBar />
+      
   </div>
 
 

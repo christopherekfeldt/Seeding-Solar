@@ -4,8 +4,8 @@ import { Progress } from 'reactstrap';
 const ProgressBar = (props) => {
     return (
       <div>
-          <p>Progress Project</p>
-        <Progress style={styles} value="60">60%</Progress>
+          <p>Progress</p>
+        <Progress style={styles} value="0">0%</Progress>
       </div>
     );
 }
