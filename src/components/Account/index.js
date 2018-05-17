@@ -30,7 +30,10 @@ class Account extends Component {
 
     this.state = {
       account: 0,
-      formeraccount: 0
+      formeraccount: 0,
+      carbonEmission: 0,
+      peopleWithElectricity: 0,
+      formerInvestments: []
     
     };
   }
@@ -51,6 +54,9 @@ class Account extends Component {
   }
 
   componentDidMount() {
+    this.showFormerInvestments()
+    this.showCarbonDioxideEmission()
+    this.showUserInformation()
     let uid = realFirebase.auth().currentUser.uid;
     firebase.db.ref('users/' + uid).once('value').then(function(snapshot){
       var formeraccount = (snapshot.val() && snapshot.val().account);
@@ -58,20 +64,36 @@ class Account extends Component {
     }.bind(this));
   }
 
+  showFormerInvestments() {
+    let uid = realFirebase.auth().currentUser.uid;
+    firebase.db.ref('users/' + uid + '/investments' ).once('value').then(function(snapshot){
+      let formerInvestments = [];
+      snapshot.forEach(function(childSnapshot){
+       var key = childSnapshot.key;
+       formerInvestments.push(childSnapshot.val());
+       console.log(childSnapshot.val())
+      })
+      this.setState({formerInvestments});
+      console.log(formerInvestments);
+    }.bind(this));
+  }
+
+
   showCarbonDioxideEmission() {
     let uid = realFirebase.auth().currentUser.uid;
     firebase.db.ref('users/' + uid).once('value').then(function(snapshot){
       var carbonEmission = (snapshot.val()) && snapshot.val().reducedCO2;
-      console.log(carbonEmission);
-    });
+      var peopleWithElectricity = (snapshot.val()) && snapshot.val().soldPanels;
+      console.log(peopleWithElectricity);
+      this.setState({peopleWithElectricity});
+      this.setState({carbonEmission});
+    }.bind(this));
   }
   showUserInformation() {
     let uid = realFirebase.auth().currentUser.uid;
     firebase.db.ref('users/' + uid).once('value').then(function(snapshot){
       var username  = (snapshot.val()) && snapshot.val().username;
       var email = (snapshot.val()) && snapshot.val().email;
-      console.log(username);
-      console.log(email);
     });
   }
 
@@ -90,8 +112,7 @@ class Account extends Component {
 
   
   render() {
-    this.showCarbonDioxideEmission()
-    this.showUserInformation()
+
 
     const isInvalid = 
       this.state.account === '' ||
@@ -99,9 +120,22 @@ class Account extends Component {
       this.state.account < 1;
 
     return(
-      <div>
-        <center>
+    <div>
+      <center>
+      
         <h4>Account</h4>  
+        <h4>reducedCO2 = {this.state.carbonEmission}</h4>
+        <h4>People who got electricity = {this.state.peopleWithElectricity}</h4>
+        <ul>
+        {this.state.formerInvestments.map(function(item, i){
+          return (
+          <li key={i}><h4>Date of investment: {item.dateOfInvestment} Ammount of investment: {item.investment} €</h4></li>
+          
+          )
+          console.log(item);
+        })
+      }
+        </ul>
         <form onSubmit={this.onSubmit}>
             <input
               value={this.state.account}
@@ -117,12 +151,16 @@ class Account extends Component {
             </Button>
             </div>
           </form>
-        </center>
+
+
+    </center>
     </div>
     );
   }
   
 }
+
+
 
 const buttonStyles = {
   marginTop: 20,
