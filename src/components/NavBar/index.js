@@ -1,11 +1,6 @@
 import React from 'react';
-import {firebase, auth, db} from '../../firebase';
+import {firebase, auth} from '../../firebase';
 import { connect } from 'react-redux';
-import withAuthorization from '../Session/withAuthorization';
-import withAuthentication from '../Session/withAuthentication';
-import { Link } from 'react-router-dom';
-import SignOutButton from '../SignOut';
-import * as routes from '../../constants/routes';
 import * as realFirebase from 'firebase';
 
 import {

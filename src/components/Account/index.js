@@ -1,20 +1,15 @@
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { PasswordForgetForm } from '../PasswordForget';
-import PasswordChangeForm from '../PasswordChange';
 import withAuthorization from '../Session/withAuthorization';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import {Button} from 'reactstrap';
-import { auth, db, firebase } from '../../firebase';
-import * as routes from '../../constants/routes';
+import {firebase } from '../../firebase';
 import * as realFirebase from 'firebase';
-import { isNumber } from 'util';
 
 
-const updateByPropertyName = (propertyName, value) => () => ({
+/*const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
-});
+});*/
 
 /*export const INITIAL_INVESTMENT = {
   investment: '',
@@ -62,8 +57,42 @@ class Account extends Component {
       this.setState({formeraccount});
     }.bind(this));
   }
+
+  showCarbonDioxideEmission() {
+    let uid = realFirebase.auth().currentUser.uid;
+    firebase.db.ref('users/' + uid).once('value').then(function(snapshot){
+      var carbonEmission = (snapshot.val()) && snapshot.val().reducedCO2;
+      console.log(carbonEmission);
+    });
+  }
+  showUserInformation() {
+    let uid = realFirebase.auth().currentUser.uid;
+    firebase.db.ref('users/' + uid).once('value').then(function(snapshot){
+      var username  = (snapshot.val()) && snapshot.val().username;
+      var email = (snapshot.val()) && snapshot.val().email;
+      console.log(username);
+      console.log(email);
+    });
+  }
+
+  /*showInvestments() {
+    let uid = realFirebase.auth().currentUser.uid;
+    firebase.db.ref('users/' + uid).once('value').then(function(snapshot){
+    var investment = (snapshot.val()) && snapshot.val().investment;
+    if (investment === 0){
+      return null
+    }
+    else {
+    
+    }
+    });
+  }*/
+
   
   render() {
+    this.showCarbonDioxideEmission()
+    this.showUserInformation()
+
     const isInvalid = 
       this.state.account === '' ||
       this.state.account === 0 ||

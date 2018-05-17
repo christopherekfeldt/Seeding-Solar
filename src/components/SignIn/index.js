@@ -62,7 +62,7 @@ class SignInForm extends Component {
 
   render() {
     const {
-      username,
+      //username,
       email,
       password,
       error,
