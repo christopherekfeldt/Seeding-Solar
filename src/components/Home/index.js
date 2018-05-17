@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-
 import withAuthorization from '../Session/withAuthorization';
 import { db } from '../../firebase';
-import SignOutButton from '../SignOut';
-import updateAccount from '../../simulation/updateAccount';
 
 class HomePage extends Component {
   componentDidMount() {

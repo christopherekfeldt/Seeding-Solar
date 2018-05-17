@@ -2,16 +2,6 @@ import pyrebase
 import datetime
 from datetime import timedelta,date,time
 
-
-#import json
-
-#class DateTimeEncoder(json.JSONEncoder):
- #   def default(self, o):
-  #      if isinstance(o, datetime):
-   #         return o.isoformat()
-#
- #       return json.JSONEncoder.default(self, o)
-
 #----------------FIREBASE KOPPLING--------------------#
 config = {
   "apiKey": "AIzaSyDPj0BZVQebAYww_VUFXhbEXPP-n2gq120",
@@ -23,11 +13,6 @@ config = {
 }
 firebase = pyrebase.initialize_app(config)
 #------------------------------------------------------# 
-#-------------TIMESTAMP--------------------------------#
-today = datetime.date.today()
-todaystr = today.strftime("%Y-%m-%d")
-
-#------------------------------------------------------#
 
 db = firebase.database() 
 #------------GLOBAL VARIABLES--------------------------#
@@ -40,35 +25,24 @@ paybackPerMonth = (costPerPanel/paybackTime)
 
 #-------INSERT FUNCTIONS HERE----------------------------------------#
 def main():
+
+    #----TIME---------------#
+    today = datetime.date.today()
+    todaystr = today.strftime("%Y-%m-%d")
     
-    #getAccounts()
-    #getPanelsPerMonth()
-    #print(users.val())
-    #calcPanelsPerMonth()
-    #addPanelsPerMonth("GmUvyPwBX0dWiFawH3FGcc45P5l1")
-    #removeOldPanels(userId)
-    #getAllPanels("GmUvyPwBX0dWiFawH3FGcc45P5l1")
-    updateDatabase()
-    #sumActivePanels("GmUvyPwBX0dWiFawH3FGcc45P5l1")
-    #setActivePanels("GmUvyPwBX0dWiFawH3FGcc45P5l1")
-    #monthlySumPayBack("GmUvyPwBX0dWiFawH3FGcc45P5l1")
-    #getUserAccount("GmUvyPwBX0dWiFawH3FGcc45P5l1")
-    #updateAccount("GmUvyPwBX0dWiFawH3FGcc45P5l1")
-    #calcPanelsPerMonth("GmUvyPwBX0dWiFawH3FGcc45P5l1")
-    #updateSoldPanels("GmUvyPwBX0dWiFawH3FGcc45P5l1")
-    #reducedAccount("GmUvyPwBX0dWiFawH3FGcc45P5l1")
-
-
+    #sumActivePanels("BaWXlaOTHEWLnUWr8RRLotNQCnp1", today)
+    updateDatabase(today, todaystr)
+    
 #---------------------------------------------------------------------#
-def updateDatabase():
+def updateDatabase(today, todaystr):
     users = db.child("users").get()
     for user in users.each():
         userId = user.key()
-        removeOldPanels(userId)
-        setActivePanels(userId)
-        updateAccount(userId)
+        removeOldPanels(userId, today)
+        updateAccount(userId, today)
         updateSoldPanels(userId)
-        addPanelsPerMonth(userId)
+        addPanelsPerMonth(userId, todaystr)
+        setActivePanels(userId)
         reducedAccount(userId)
 
 #--------GET ONE USERS ACCOUNT VALUE---------------------------------------#
@@ -79,8 +53,8 @@ def getUserAccount(userId):
 
 
 #-----------------------------------------------#
-def updateAccount(userId):
-    newAccount = getUserAccount(userId) + monthlySumPayBack(userId)
+def updateAccount(userId, today):
+    newAccount = getUserAccount(userId) + monthlySumPayBack(userId, today)
     db.child("users").child(userId).update({"account": newAccount})
 
 
@@ -92,8 +66,8 @@ def reducedAccount(userId):
     account = db.child("users").child(userId).update({"account": account})
 
 #-----------CALCULATES AND RETURN A USERS MONTLY PAYBACK ON SUNPANELS--------------#
-def monthlySumPayBack(userId):
-    monthlySumPayBack = sumActivePanels(userId) * paybackPerMonth
+def monthlySumPayBack(userId, today):
+    monthlySumPayBack = sumActivePanels(userId, today) * paybackPerMonth
     #print (monthlySumPayBack)
     return monthlySumPayBack 
 #---------------------------------------------------------------------------------#
@@ -104,9 +78,13 @@ def updateSoldPanels(userId):
 
 #-----------ADD PANELS TO panelsPerMonth----------------------------------------#
 
-def addPanelsPerMonth(userId):
-    panel = {"NumberOfPanels": calcPanelsPerMonth(userId), "DateOfUpdate": todaystr}
-    db.child("users").child(userId).child("panelsPerMonth").push(panel)
+def addPanelsPerMonth(userId, todaystr):
+    panelsPerMonth = calcPanelsPerMonth(userId)
+    if (panelsPerMonth == 0):
+        pass
+    else:
+        panel = {"numberOfPanels": panelsPerMonth, "dateOfUpdate": todaystr}    
+        db.child("users").child(userId).child("panelsPerMonth").push(panel)
 
 #-------------GET ALL PANELS FOR ONE USER------------------------#
 
@@ -115,37 +93,59 @@ def getAllPanels(userId):
     return checkpanel
 
     
-#-----------------SUM OF ACTIVE PANELS FOR EACH USER------------------------------#
-def sumActivePanels(userId):
+#-----------------SUM OF ACTIVE PANELS FOR EACH USER ON MONTHLY PAYBACK------------------------------#
+def sumActivePanels(userId, today):
+    sum = 0
+    outDated = today - timedelta(weeks=78)
+    outDated = datetime.datetime.strftime(outDated, "%Y-%m-%d")
+    outDated = datetime.datetime.strptime(outDated, "%Y-%m-%d")
+    panels = getAllPanels(userId)
+    if (panels.val() == 0):
+        pass
+    else:
+        for eachMonth in panels.each():
+            panelId = eachMonth.key()
+            date = db.child("users").child(userId).child("panelsPerMonth").child(panelId).child("dateOfUpdate").get()
+            dateOfUpdate = datetime.datetime.strptime(date.val(), "%Y-%m-%d")
+            if(dateOfUpdate < outDated):
+                pass
+            else:
+                numberOfPanels = db.child("users").child(userId).child("panelsPerMonth").child(panelId).child("numberOfPanels").get()
+                sum = sum + numberOfPanels.val()
+        
+    return sum
+
+#--------------SETS activePanels FOR CARBON EMISSION-----------------------#
+def setActivePanels(userId):
     sum = 0
     panels = getAllPanels(userId)
     for eachMonth in panels.each():
         panelId = eachMonth.key()
-        test = db.child("users").child(userId).child("panelsPerMonth").child(panelId).child("NumberOfPanels").get()
+        test = db.child("users").child(userId).child("panelsPerMonth").child(panelId).child("numberOfPanels").get()
         sum = sum + test.val()
     
-    return sum
+        db.child("users").child(userId).update({"activePanels": sum})    
 
-#--------------SETS activePanels FOR EACH USER-----------------------#
-def setActivePanels(userId):
-    activePanels = sumActivePanels(userId)
-    db.child("users").child(userId).update({"activePanels": activePanels})    
 
 #-------------ITERATE THROUGH AND REMOVE ALL OUTDATED PANELS------------------------#
 
-def removeOldPanels(userId):
+def removeOldPanels(userId, today):
+    
     checkpanel = getAllPanels(userId)
-    for eachpanel in checkpanel.each():
-        panelId = eachpanel.key()
-        panelDate = db.child("users").child(userId).child("panelsPerMonth").child(panelId).child("DateOfUpdate").get()
-        dateOfUpdate = datetime.datetime.strptime(panelDate.val(), "%Y-%m-%d")
-        #print (dateOfUpdate)
-        outDated = today - timedelta(weeks=104)
-        outDated = datetime.datetime.strftime(outDated, "%Y-%m-%d")
-        outDated = datetime.datetime.strptime(outDated, "%Y-%m-%d")
-        #print ("two years ago: ", outDated)
-        if (dateOfUpdate < outDated):
-            db.child("users").child(userId).child("panelsPerMonth").child(panelId).remove()
+    if (checkpanel.val() == 0):
+        pass 
+    else:    
+        for eachpanel in checkpanel.each():
+            panelId = eachpanel.key()
+            panelDate = db.child("users").child(userId).child("panelsPerMonth").child(panelId).child("dateOfUpdate").get()
+            dateOfUpdate = datetime.datetime.strptime(panelDate.val(), "%Y-%m-%d")
+            #print (dateOfUpdate)
+            outDated = today - timedelta(weeks=104)
+            outDated = datetime.datetime.strftime(outDated, "%Y-%m-%d")
+            outDated = datetime.datetime.strptime(outDated, "%Y-%m-%d")
+            #print ("two years ago: ", outDated)
+            if (dateOfUpdate < outDated):
+                db.child("users").child(userId).child("panelsPerMonth").child(panelId).remove()
 
 #-----------CALCULATE AMOUNT OF PANELS DEPENDING ON SIZE OF INVESTMENT----------#
 

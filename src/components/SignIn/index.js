@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-
+import {Button} from 'reactstrap';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { auth } from '../../firebase';
@@ -9,12 +9,18 @@ import * as routes from '../../constants/routes';
 const SignInPage = ({ history }) =>
   <div>
     <center>
-      <h3>SignIn</h3>
+      <h3>Sign In</h3>
       <SignInForm history={history} />
+      <div style={paddingStyles}>
       <PasswordForgetLink />
       <SignUpLink />
+      </div>
     </center>
   </div>
+
+const paddingStyles = {
+  marginTop: 20,
+};
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -56,7 +62,7 @@ class SignInForm extends Component {
 
   render() {
     const {
-      username,
+      //username,
       email,
       password,
       error,
@@ -67,13 +73,14 @@ class SignInForm extends Component {
       email === '';
 
     return (
-      <center>
         <form onSubmit={this.onSubmit}>
+        <center>        
           <div>
           <input
             value={email}
             onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
             type="text"
+            style={inputWindowStyles}
             placeholder="Email Address"
           />
           </div>
@@ -82,19 +89,34 @@ class SignInForm extends Component {
             value={password}
             onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
             type="password"
+            style={inputWindowStyles}
             placeholder="Password"
           />
           </div>
-          <button disabled={isInvalid} type="submit">
+          </center>
+          <div>
+          <Button disabled={isInvalid} type="submit" style={buttonStyles}>
             Sign In
-          </button>
-
+          </Button>
+          </div>
           { error && <p>{error.message}</p> }
         </form>
-      </center>
     );
   }
 }
+
+const buttonStyles = {
+    marginTop: 20,
+    textColor: 'white',
+    backgroundColor: 'orange',
+    width: 120
+  };
+  
+  const inputWindowStyles = {
+    marginTop: 20,
+    width: 320,
+    height: 40    
+  };
 
 export default withRouter(SignInPage);
 

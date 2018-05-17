@@ -28,16 +28,16 @@ function Footer() {
     <footer style={footerStyle}>
         <Nav style={footerTextStyleFirst} justified>
           <NavItem
-            eventKey={1}>
+            eventkey={1}>
             Contact
           </NavItem>
           <NavItem
-            eventKey={2}
+            eventkey={2}
             title="Item">
             FAQ
           </NavItem>
           <NavItem
-            eventKey={3}>
+            eventkey={3}>
             Follow
           </NavItem>
         </Nav>
@@ -45,16 +45,16 @@ function Footer() {
 
           <Nav style={footerTextStyleSecond} justified>
           <NavItem
-            eventKey={1}>
+            eventkey={1}>
             <NavLink style={NavLinkStyle} href='/AboutUs/'>Email</NavLink>
           </NavItem>
           <NavItem
-            eventKey={2}
+            eventkey={2}
             title="Item">
             <NavLink style={NavLinkStyle} href='/AboutUs/'>Terms & Conditions</NavLink>
           </NavItem>
           <NavItem
-            eventKey={3}>
+            eventkey={3}>
             <NavLink style={NavLinkStyle} href='/AboutUs/'>Facebook</NavLink>
           </NavItem>
         </Nav>
@@ -63,16 +63,16 @@ function Footer() {
 
           <Nav justified>
           <NavItem
-            eventKey={1}>
+            eventkey={1}>
             <NavLink style={NavLinkStyle} href='/AboutUs/'>Phone</NavLink>
           </NavItem>
           <NavItem
-            eventKey={2}
+            eventkey={2}
             title="Item">
             <NavLink style={NavLinkStyle} href='/AboutUs/'>Privacy policy</NavLink>
           </NavItem>
           <NavItem
-            eventKey={3}>
+            eventkey={3}>
             <NavLink style={NavLinkStyle} href='/AboutUs/'>Instagram</NavLink>
           </NavItem>
         </Nav>

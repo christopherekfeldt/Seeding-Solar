@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
-import updateAccount from '../simulation/updateAccount';
-import SetInterval from 'set-interval';
+//import updateAccount from '../simulation/updateAccount';
+//import SetInterval from 'set-interval';
 
 const config = {
   apiKey: "AIzaSyDPj0BZVQebAYww_VUFXhbEXPP-n2gq120",

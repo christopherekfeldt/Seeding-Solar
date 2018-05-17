@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardImg, CardText, CardBody, CardLink,
+import { Card, CardText, CardBody, CardLink,
   CardTitle, CardSubtitle } from 'reactstrap';
 
 const CardInfo = (props) => {
@@ -10,7 +10,7 @@ const CardInfo = (props) => {
           <CardTitle>Project 1</CardTitle>
           <CardSubtitle>Kenya off-grid company blabla</CardSubtitle>
             </CardBody>
-                <img width="50%" src="https://i.onthe.io/0fgjhs3aepa7mjf38g.r900.05b599e1.jpg" alt="Card image cap" />
+                <img width="50%" src="https://i.onthe.io/0fgjhs3aepa7mjf38g.r900.05b599e1.jpg" alt="" />
             <CardBody>
           <CardText>Här fyller vi i kort men passande text för detta project</CardText>
           <CardLink href="#">Read more</CardLink>
