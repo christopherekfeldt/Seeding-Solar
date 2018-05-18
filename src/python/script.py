@@ -16,7 +16,7 @@ firebase = pyrebase.initialize_app(config)
 
 db = firebase.database() 
 #------------GLOBAL VARIABLES--------------------------#
-
+intrest = 1.08
 costPerPanel = 54
 paybackTime = 18 #18 months
 paybackPerMonth = (costPerPanel/paybackTime)
@@ -67,7 +67,7 @@ def reducedAccount(userId):
 
 #-----------CALCULATES AND RETURN A USERS MONTLY PAYBACK ON SUNPANELS--------------#
 def monthlySumPayBack(userId, today):
-    monthlySumPayBack = sumActivePanels(userId, today) * paybackPerMonth
+    monthlySumPayBack = sumActivePanels(userId, today) * paybackPerMonth * intrest 
     #print (monthlySumPayBack)
     return monthlySumPayBack 
 #---------------------------------------------------------------------------------#
