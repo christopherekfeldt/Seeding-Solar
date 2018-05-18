@@ -5,6 +5,8 @@ import React, { Component } from 'react';
 import {Button} from 'reactstrap';
 import {firebase } from '../../firebase';
 import * as realFirebase from 'firebase';
+import * as fontAwsome from 'react-icons/lib/fa';
+import icon from '../../carbon.ico';
 
 
 /*const updateByPropertyName = (propertyName, value) => () => ({
@@ -122,11 +124,36 @@ class Account extends Component {
     return(
     <div class="container">
       <div class="row">
-        <div class="col">
+        <div class="col" style={boxStyle}>
+        <center>
+            <h4>Impact</h4>
+          </center>
+          <div class="row">
+            <div class="col">
+              <center>
+              <img style={imgStyle} src={icon}></img>
+              <h6>{this.state.carbonEmission}</h6>
+              <h6>Tons reduced carbon dioxide </h6>
+              </center>
+            </div>
+            <div class="col">
+              <center>
+              <h4><fontAwsome.FaHome style={houseStyle}/></h4>
+              <h6>{this.state.peopleWithElectricity}</h6>
+              <h6>Households provided with electricity</h6>
+              </center>
+            </div>
           
-          <h4>reducedCO2 = {this.state.carbonEmission}</h4>
-          <h4>People who got electricity = {this.state.peopleWithElectricity}</h4>
+          
+          </div>  
+          
+       
+       
+       
+       
         </div>
+
+          
           <div class="col">
             <center>
             <h4>Account</h4>  
@@ -141,25 +168,70 @@ class Account extends Component {
                 />
                 <div>
                 <Button disabled={isInvalid} type="submit" style={buttonStyles}>
-                  Make Donation
+                  Make Investment
                 </Button>
                 </div>
             </form>
             </center>
         </div>
         <div class="col">
-        <ul>
-        {this.state.formerInvestments.map(function(item, i){
-          return (
-          <li key={i}><h4>Date of investment: {item.dateOfInvestment} Ammount of investment: {item.investment} €</h4></li>
-          
-          )
-          console.log(item);
-        })
-      }
-        </ul>
+          <div id="openweathermap-widget-22"></div>
         </div>
+        
+        
         </div>
+        
+        
+        <div class="row" >
+          <div class="col" style={boxStyle}>
+          <center>
+          <h4>Investments</h4>
+          </center>
+          <div class="row">
+            <div class="col">
+            <center>
+            <h5>Date</h5>
+            </center>
+            <ul>
+            {this.state.formerInvestments.map(function(item, i){
+            return (
+              <center>
+               <li key={i}> <h6> {item.dateOfInvestment}</h6></li>
+              </center>
+              )
+            })
+            }
+            </ul>
+            </div>
+            
+            <div class="col">
+            <center>
+            <h5>Amount</h5>
+            </center>
+            <ul>
+            {this.state.formerInvestments.map(function(item, i){
+            return (
+              
+                <h6 key={i} style={paddingStyle}>{item.investment} €</h6>
+  
+              )
+            })
+            }
+            </ul>         
+            </div>
+          </div>
+          </div>
+          <div class="col">
+          </div>
+          <div class="col">  
+          </div>
+
+          </div>
+
+
+
+
+
       </div>
     );
   }
@@ -167,7 +239,9 @@ class Account extends Component {
 }
 
 
-
+const paddingStyle= {
+  marginTop:12.5
+}
 const buttonStyles = {
   marginTop: 20,
   textColor: 'white',
@@ -191,6 +265,30 @@ export default compose(
   withAuthorization(authCondition),
   connect(mapStateToProps)
 )(Account);
+
+const houseStyle= {
+  height: 85,
+  width: 85,
+  paddingBottom: 15
+}
+
+const imgStyle= {
+  height: 95,
+  width: 75,
+  paddingBottom: 20
+}
+
+const boxStyle = {
+  background: 'white',
+  border: 2,
+  borderStyle: 'solid',
+  marginBottom: 16,
+  paddingTop: 16,
+  paddingRight: 16,
+  paddingLeft: 16,
+  paddingBottom: 32
+}
+
 
 function getTodaysDate(){
   var today = new Date();
