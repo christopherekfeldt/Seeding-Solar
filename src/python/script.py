@@ -1,6 +1,7 @@
 import pyrebase
 import datetime
-from datetime import timedelta,date,time
+import time
+from datetime import timedelta,date
 
 #----------------FIREBASE KOPPLING--------------------#
 config = {
@@ -27,11 +28,11 @@ paybackPerMonth = (costPerPanel/paybackTime)
 def main():
     while True:
     #----TIME---------------#
-    today = datetime.date.today()
-    todaystr = today.strftime("%Y-%m-%d")
-    
-    updateDatabase(today, todaystr)
-    time.sleep(120)
+        today = datetime.date.today()
+        todaystr = today.strftime("%Y-%m-%d")
+        
+        updateDatabase(today, todaystr)
+        time.sleep(120)
     
 #---------------------------------------------------------------------#
 #Updates the database for each user
@@ -70,8 +71,8 @@ def reducedAccount(userId):
 
 #-----------CALCULATES AND RETURN A USERS MONTLY PAYBACK ON SUNPANELS--------------#
 def monthlySumPayBack(userId, today):
-    int monthlySumPayBack = sumActivePanels(userId, today) * paybackPerMonth * intrest 
-    return monthlySumPayBack 
+    monthlySumPayBack = sumActivePanels(userId, today) * paybackPerMonth * intrest 
+    return int(monthlySumPayBack) 
 #---------------------------------------------------------------------------------#
 #Updates the total ammount of sold panels for the user in the database
 def updateSoldPanels(userId):
@@ -122,12 +123,15 @@ def sumActivePanels(userId, today):
 def setActivePanels(userId):
     sum = 0
     panels = getAllPanels(userId)
-    for eachMonth in panels.each():
-        panelId = eachMonth.key()
-        test = db.child("users").child(userId).child("panelsPerMonth").child(panelId).child("numberOfPanels").get()
-        sum = sum + test.val()
-    
-        db.child("users").child(userId).update({"activePanels": sum})    
+    if (panels.val() == 0):
+        pass
+    else:
+        for eachMonth in panels.each():
+            panelId = eachMonth.key()
+            getPanels = db.child("users").child(userId).child("panelsPerMonth").child(panelId).child("numberOfPanels").get()
+            sum = sum + getPanels.val()
+        
+            db.child("users").child(userId).update({"activePanels": sum})    
 
 
 #-------------ITERATE THROUGH AND REMOVE ALL OUTDATED PANELS------------------------#
