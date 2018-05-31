@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardText, CardBody, CardLink,
   CardTitle, CardSubtitle } from 'reactstrap';
 
+//Card test, used on Project page.
 const CardInfo = (props) => {
   return (
     <div>

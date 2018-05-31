@@ -8,21 +8,6 @@ import * as realFirebase from 'firebase';
 import * as fontAwsome from 'react-icons/lib/fa';
 import icon from '../../carbon.ico';
 
-
-/*const updateByPropertyName = (propertyName, value) => () => ({
-  [propertyName]: value,
-});*/
-
-/*export const INITIAL_INVESTMENT = {
-  investment: '',
-  date: ''
-};*/
-
-/*const doCreateInvestment = (uid, investment, date) => db.ref('users/' + uid + '/investments').set({
-  investment,
-  date,
-})*/
-
 class Account extends Component {
   constructor(props) {
     super(props);
@@ -40,10 +25,12 @@ class Account extends Component {
     };
   }
 
+  //Updates account value after button press.
   handleChange(event) {
     this.setState({account: event.target.value});
   }
-
+  
+  //Sets variables to specifik values. Updates Account and sets new investments.
   onSubmit = (event) => {
     let uid = realFirebase.auth().currentUser.uid;
     var account = this.state.account;
@@ -55,17 +42,18 @@ class Account extends Component {
     firebase.db.ref('users/' + uid + '/investments').push().set({investment, dateOfInvestment});
   }
 
+  //Runs after page is rendered.
   componentDidMount() {
     this.showFormerInvestments()
-    this.showCarbonDioxideEmission()
-    this.showUserInformation()
+    this.showImpact()
     let uid = realFirebase.auth().currentUser.uid;
     firebase.db.ref('users/' + uid).once('value').then(function(snapshot){
       var formeraccount = (snapshot.val() && snapshot.val().account);
       this.setState({formeraccount});
     }.bind(this));
   }
-
+  
+  //Shows all former investments
   showFormerInvestments() {
     let uid = realFirebase.auth().currentUser.uid;
     firebase.db.ref('users/' + uid + '/investments' ).once('value').then(function(snapshot){
@@ -73,15 +61,13 @@ class Account extends Component {
       snapshot.forEach(function(childSnapshot){
        var key = childSnapshot.key;
        formerInvestments.push(childSnapshot.val());
-       console.log(childSnapshot.val())
       })
       this.setState({formerInvestments});
-      console.log(formerInvestments);
     }.bind(this));
   }
 
-
-  showCarbonDioxideEmission() {
+  //Shows impact in form of Reduced Carbon dioxide emissions and households provided electricity.
+  showImpact() {
     let uid = realFirebase.auth().currentUser.uid;
     firebase.db.ref('users/' + uid).once('value').then(function(snapshot){
       var carbonEmission = (snapshot.val()) && snapshot.val().reducedCO2;
@@ -91,31 +77,10 @@ class Account extends Component {
       this.setState({carbonEmission});
     }.bind(this));
   }
-  showUserInformation() {
-    let uid = realFirebase.auth().currentUser.uid;
-    firebase.db.ref('users/' + uid).once('value').then(function(snapshot){
-      var username  = (snapshot.val()) && snapshot.val().username;
-      var email = (snapshot.val()) && snapshot.val().email;
-    });
-  }
 
-  /*showInvestments() {
-    let uid = realFirebase.auth().currentUser.uid;
-    firebase.db.ref('users/' + uid).once('value').then(function(snapshot){
-    var investment = (snapshot.val()) && snapshot.val().investment;
-    if (investment === 0){
-      return null
-    }
-    else {
-    
-    }
-    });
-  }*/
 
-  
+  //Renders all HTML code.
   render() {
-
-
     const isInvalid = 
       this.state.account === '' ||
       this.state.account === 0 ||
@@ -147,10 +112,7 @@ class Account extends Component {
           
           </div>  
           
-       
-       
-       
-       
+
         </div>
 
           
@@ -228,16 +190,13 @@ class Account extends Component {
 
           </div>
 
-
-
-
-
       </div>
     );
   }
   
 }
 
+//STYLING
 
 const paddingStyle= {
   marginTop:12.5
@@ -254,17 +213,6 @@ const inputWindowStyles = {
   width: 320,
   height: 40    
 };
-
-const mapStateToProps = (state) => ({
-  authUser: state.sessionState.authUser,
-});
-
-const authCondition = (authUser) => !!authUser;
-
-export default compose(
-  withAuthorization(authCondition),
-  connect(mapStateToProps)
-)(Account);
 
 const houseStyle= {
   height: 85,
@@ -289,7 +237,21 @@ const boxStyle = {
   paddingBottom: 32
 }
 
+//Sets this sessions user to Authorized user.
+const mapStateToProps = (state) => ({
+  authUser: state.sessionState.authUser,
+});
 
+//Checks if User is logged in.
+const authCondition = (authUser) => !!authUser;
+
+//Exports functions above to different files.
+export default compose(
+  withAuthorization(authCondition),
+  connect(mapStateToProps)
+)(Account);
+
+//Shows todays date.
 function getTodaysDate(){
   var today = new Date();
   var dd = today.getDate();

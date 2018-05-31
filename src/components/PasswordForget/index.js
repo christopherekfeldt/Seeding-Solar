@@ -4,6 +4,7 @@ import {Button} from 'reactstrap';
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 
+//Page where you can fill in your email and get help with your forgotten password.
 const PasswordForgetPage = () =>
   <div>
     <center>
@@ -16,6 +17,7 @@ const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
 });
 
+//Initial state of email == empty string.
 const INITIAL_STATE = {
   email: '',
   error: null,
@@ -31,6 +33,7 @@ class PasswordForgetForm extends Component {
   onSubmit = (event) => {
     const { email } = this.state;
 
+    //Uses Firebase function doPasswordReset and resets password for specific email.
     auth.doPasswordReset(email)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }));
@@ -51,6 +54,7 @@ class PasswordForgetForm extends Component {
     const isInvalid = email === '';
 
     return (
+      //Form to fill in email for user that has forgotten his/her password.
       <form onSubmit={this.onSubmit}>
         <div>
         <input
@@ -71,6 +75,8 @@ class PasswordForgetForm extends Component {
   }
 }
 
+//STYLING 
+
 const buttonStyles = {
   marginTop: 20,
   textColor: 'white',
@@ -84,6 +90,7 @@ const inputWindowStyles = {
   height: 40    
 };
 
+//Link and route to Password Forget page. Shown on sign in page!
 const PasswordForgetLink = () =>
   <p>
     <Link to={routes.PASSWORD_FORGET}>Forgot Password?</Link>

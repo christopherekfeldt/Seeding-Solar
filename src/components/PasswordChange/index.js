@@ -6,12 +6,14 @@ const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
 });
 
+//Sets initial states of variables.
 const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
   error: null,
 };
 
+//PasswordChangeForm, sounds as it is.
 class PasswordChangeForm extends Component {
   constructor(props) {
     super(props);
@@ -22,6 +24,7 @@ class PasswordChangeForm extends Component {
   onSubmit = (event) => {
     const { passwordOne } = this.state;
 
+    //Updates password.
     auth.doPasswordUpdate(passwordOne)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }));
@@ -40,11 +43,13 @@ class PasswordChangeForm extends Component {
       error,
     } = this.state;
 
+    //Checks so password is not empty or not the same as passwordTwo.
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '';
 
     return (
+      //Here is the form u fill in to change your password if forgotten.
       <form onSubmit={this.onSubmit}>
       <div>
         <input
@@ -73,6 +78,8 @@ class PasswordChangeForm extends Component {
     );
   }
 }
+
+//STYLING
 
 const buttonStyles = {
   marginTop: 20,

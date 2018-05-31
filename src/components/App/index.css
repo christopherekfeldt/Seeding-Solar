@@ -1,7 +1,4 @@
-:root {
-   space: 1.5em 0;
-   space: 2em 0;
-}
+
 .app {
  display: flex;
  flex-direction: column;

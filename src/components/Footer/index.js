@@ -1,28 +1,7 @@
 import React from 'react';
 import {  Nav, NavItem, NavLink } from 'reactstrap';
 
-const footerStyle = {
-  color: 'white',
-  backgroundColor: 'black',
-  height: 200
-};
-
-const footerTextStyleFirst = {
-  marginTop: 20,
-  color: 'grey'
-};
-
-const footerTextStyleSecond = {
-  marginTop: 20
-};
-
-const copyrightStyle ={
-  marginTop: 20
-}
-
-const NavLinkStyle ={
-  color: 'white'
-}
+//Footer for all pages.
 function Footer() {
   return (
     <footer style={footerStyle}>
@@ -84,6 +63,28 @@ function Footer() {
         </div>
     </footer>
   );
+}
+const footerStyle = {
+  color: 'white',
+  backgroundColor: 'black',
+  height: 200
+};
+
+const footerTextStyleFirst = {
+  marginTop: 20,
+  color: 'grey'
+};
+
+const footerTextStyleSecond = {
+  marginTop: 20
+};
+
+const copyrightStyle ={
+  marginTop: 20
+}
+
+const NavLinkStyle ={
+  color: 'white'
 }
 
 export default Footer;

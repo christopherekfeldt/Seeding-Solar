@@ -1,6 +1,7 @@
 import React from 'react';
 import Slideshow from '../Slideshow';
 
+//Start Page
 const LandingPage = () =>
     <div>
       <div class="jumbotron">

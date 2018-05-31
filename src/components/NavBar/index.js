@@ -32,7 +32,7 @@ class NavBar extends React.Component {
     };
   }
 
-
+  //Takes out username from the logged in user
   componentDidMount() {
     firebase.auth.onAuthStateChanged(authUser => {
       if(authUser){
@@ -49,22 +49,16 @@ class NavBar extends React.Component {
       }
     });
   }
-      
 
-
-
+  //Checks if user is logged in, if so, u can scroll down and use special funcions.
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
 
-  
- //<Navbar fixed="top" color="faded" light expand="md">
   render() {
- 
-  
-
+        //Checks if user is logged in, if so show code under.
         if (this.state.authUser) {
             return(
             <div>
@@ -106,6 +100,7 @@ class NavBar extends React.Component {
             </Navbar>
           </div>
             );
+          // If user is not logged in, show this
         } else {
            return(
             <div>

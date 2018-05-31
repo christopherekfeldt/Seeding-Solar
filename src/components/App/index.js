@@ -15,6 +15,7 @@ import NavBar from '../NavBar';
 import './index.css';
 import Footer from '../Footer';
 
+//Renders some parts of all pages like Footer, Navbar and sets Routes for every link to their specific page.
 const App = () =>
   <Router>
     <div className="app">
