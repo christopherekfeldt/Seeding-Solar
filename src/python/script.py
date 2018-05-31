@@ -25,12 +25,13 @@ paybackPerMonth = (costPerPanel/paybackTime)
 
 #-------INSERT FUNCTIONS HERE----------------------------------------#
 def main():
-
+    while True:
     #----TIME---------------#
     today = datetime.date.today()
     todaystr = today.strftime("%Y-%m-%d")
     
     updateDatabase(today, todaystr)
+    time.sleep(120)
     
 #---------------------------------------------------------------------#
 #Updates the database for each user
@@ -69,7 +70,7 @@ def reducedAccount(userId):
 
 #-----------CALCULATES AND RETURN A USERS MONTLY PAYBACK ON SUNPANELS--------------#
 def monthlySumPayBack(userId, today):
-    monthlySumPayBack = sumActivePanels(userId, today) * paybackPerMonth * intrest 
+    int monthlySumPayBack = sumActivePanels(userId, today) * paybackPerMonth * intrest 
     return monthlySumPayBack 
 #---------------------------------------------------------------------------------#
 #Updates the total ammount of sold panels for the user in the database

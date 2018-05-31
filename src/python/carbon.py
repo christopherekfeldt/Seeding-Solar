@@ -17,10 +17,10 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database() 
 
 #-----------------GLOBAL VARIABLES----------------------#
-
-maxSolarPanelEffect = 500 #byt ut värden mot korrekta
-lighBulbEffect = 100 # 
-hourlyKeroseneEmission = 4 # 
+#Change the values before use
+maxSolarPanelEffect = 500 
+lighBulbEffect = 100 
+hourlyKeroseneEmission = 4  
 
 #-------INSERT FUNCTIONS HERE----------------------------------------#
 def main():
