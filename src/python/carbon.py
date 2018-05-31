@@ -2,7 +2,7 @@ import pyrebase
 import time
 import pyowm
 
-#----------------FIREBASE KOPPLING--------------------#
+#----------------FIREBASE CONECTION--------------------#
 config = {
   "apiKey": "AIzaSyDPj0BZVQebAYww_VUFXhbEXPP-n2gq120",
   "authDomain": "seeding-solar.firebaseapp.com",
@@ -25,6 +25,9 @@ hourlyKeroseneEmission = 4 #
 #-------INSERT FUNCTIONS HERE----------------------------------------#
 def main():
     while True:
+        #Will run forever with a 20 seconds delay.
+        #You need to insert your own OpenWeatherMap key into pyowm.OWM('key goes here')
+        #Gets the current weather and updates every single users reduced carbon dioxide 
         owm = pyowm.OWM('eba1606aafc3aa14ec0ebc9437f939f6')
         observation = owm.weather_at_id(184742)
         weather = observation.get_weather()
@@ -43,12 +46,16 @@ def main():
         updateDatabase(epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, temperature)
         time.sleep(20)
 #--------------------------------------------------------#
+#Calls the function updateReducedCO2 for every single user
 def updateDatabase(epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, temperature):
     users = db.child("users").get()
     for user in users.each():
         userId = user.key()
         updateReducedCO2(userId, epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, temperature)
 #--------------------------------------------------------#
+#Desides what effect the solar panel has.
+#First it checks if it is night and returns zero effect if it is.
+#If it is day, the effect depends on cloud percentage and temperature
 def getSolarPanelEffect(epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, temperature):
     effect = 0
     if (epochTime < sunriseEpoch or epochTime > sunsetEpoch):

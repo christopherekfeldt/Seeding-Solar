@@ -6,10 +6,8 @@ import App from './components/App';
 import store from './store';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
-//import updateAccount from './simulation/updateAccount';
-//import SetInterval from 'set-interval';
 
-//SetInterval.start(updateAccount, 5000, 'updateAccount');
+//Main Javascript function, Render the file "App" to the browser. 
 
 
 ReactDOM.render(

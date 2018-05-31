@@ -15,6 +15,7 @@ const CardInfo = (props) => {
           <CardText>Här fyller vi i kort men passande text för detta project</CardText>
           <CardLink href="#">Read more</CardLink>
           <CardLink href="#">About the local company</CardLink>
+          <CardLink href="/Account/">Make investment</CardLink>
         </CardBody>
       </Card>
     </div>
