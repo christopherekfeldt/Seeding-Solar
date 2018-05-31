@@ -1,6 +1,6 @@
 import React from 'react';
 import { Progress } from 'reactstrap';
-
+//Progress bar for a project
 const ProgressBar = (props) => {
     return (
       <div>
@@ -10,7 +10,7 @@ const ProgressBar = (props) => {
     );
 }
 
-//Såhär ska vi skriva vår styling för saker istället för att skapa massa CSS filer :) 
+//Style of the progress bar
 const styles = {
     width: 400,
     marginLeft: 20

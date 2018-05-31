@@ -27,7 +27,7 @@ def main():
     while True:
         #Will run forever with a 20 seconds delay.
         #You need to insert your own OpenWeatherMap key into pyowm.OWM('key goes here')
-        #Gets the current weather and updates every single users reduced carbon dioxide 
+        #Gets the current weather and calls updateDatabase()
         owm = pyowm.OWM('eba1606aafc3aa14ec0ebc9437f939f6')
         observation = owm.weather_at_id(184742)
         weather = observation.get_weather()
@@ -71,6 +71,7 @@ def getSolarPanelEffect(epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, t
             effect = (0.1 - temperatureEffect(temperature)) * maxSolarPanelEffect
     return effect
 #--------------------------------------------------------#
+#If the temperature is over 25 C, returns the effect loss of a solar panel
 def temperatureEffect(temperature):
     if (temperature <= 25):
         return 0
@@ -79,25 +80,26 @@ def temperatureEffect(temperature):
 
 
 #--------------------------------------------------------#
+#Multiplies the amount of solar panels for one user with the current effect of a solar panel
 def getUserTotalEffect(userId, epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, temperature):
     active =  db.child("users").child(userId).child("activePanels").get()
-    print (active.val())
 
     getTotalEffect = active.val() * getSolarPanelEffect(epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, temperature)
-    print (getTotalEffect)
     return getTotalEffect
 #--------------------------------------------------------#
+#Compares the energy from one users solar panels with the energy from a light bulb to get the time
 def hoursOfLightBulb(userId, epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, temperature):
     totalEffect = getUserTotalEffect(userId, epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, temperature)
     hoursOfLight = totalEffect/lighBulbEffect
-    print (hoursOfLight)
     return hoursOfLight
 #--------------------------------------------------------#
+#Gets the time from a light buld and multiplies it with the Kerosene emission
 def reducedEmissions(userId, epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, temperature):
     reducedEmission = hoursOfLightBulb(userId, epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, temperature) * hourlyKeroseneEmission
-    print (reducedEmission)
+
     return reducedEmission
 #--------------------------------------------------------#
+#Updates the reduced carbon dioxide for the user in the database
 def updateReducedCO2(userId, epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, temperature):
     oldValue =  db.child("users").child(userId).child("reducedCO2").get()
     newValue = oldValue.val() + reducedEmissions(userId, epochTime, sunriseEpoch, sunsetEpoch, cloudPercentage, temperature)

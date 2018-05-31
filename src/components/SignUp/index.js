@@ -6,8 +6,8 @@ import {
 import {Button} from 'reactstrap';
 import { auth, db } from '../../firebase';
 import * as routes from '../../constants/routes';
-//import { INITIAL_INVESTMENT } from '../Account';
 
+//Renders the sign up page
 const SignUpPage = ({ history }) =>
   <div>
     <center>
@@ -20,14 +20,19 @@ const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
 });
 
+// The initial state for a user in the database.
 const INITIAL_STATE = {
   username: '',
   email: '',
   passwordOne: '',
   passwordTwo: '',
-  investments: 0,
+  investments: {
+    investment: '',
+  },
   account: 0,
-  panelsPerMonth: 0,
+  panelsPerMonth: {
+    panel: '',
+  },
   activePanels: 0,
   soldPanels: 0,
   reducedCO2: 0,
@@ -42,7 +47,7 @@ class SignUpForm extends Component {
 
     this.state = { ...INITIAL_STATE };
   }
-
+//When a user presses the sign up button, sets the initial state to the user
   onSubmit = (event) => {
     const {
       username,
@@ -59,7 +64,7 @@ class SignUpForm extends Component {
     const {
       history,
     } = this.props;
-
+    //Creates a user with Firebase authentication. Firebase takes care of the password for safety reasons
     auth.doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
 
@@ -91,12 +96,14 @@ class SignUpForm extends Component {
       error,
     } = this.state;
 
+    //Checks if the user is valid 
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       username === '' ||
       email === '';
 
+      //Returns the sign up form and sets the database values equal to what the user writes for email and username...
     return (
       <form onSubmit={this.onSubmit}>
         <div>
@@ -145,20 +152,21 @@ class SignUpForm extends Component {
   }
 }
 
+//Style on the button
 const buttonStyles = {
   marginTop: 20,
   textColor: 'white',
   backgroundColor: 'orange',
   width: 120
 };
-
+//Style on the form
 const inputWindowStyles = {
   marginTop: 20,
   width: 320,
   height: 40    
 };
 
-
+//Link to sign up from sign in
 const SignUpLink = () =>
   <p>
     Don't have an account?
@@ -172,4 +180,3 @@ export {
   SignUpForm,
   SignUpLink,
 };
-

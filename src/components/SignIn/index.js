@@ -6,6 +6,7 @@ import { PasswordForgetLink } from '../PasswordForget';
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 
+//Sign in page with links to sign up and forgot password
 const SignInPage = ({ history }) =>
   <div>
     <center>
@@ -18,14 +19,12 @@ const SignInPage = ({ history }) =>
     </center>
   </div>
 
-const paddingStyles = {
-  marginTop: 20,
-};
+
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
 });
-
+//The initial state for the form
 const INITIAL_STATE = {
   email: '',
   password: '',
@@ -38,7 +37,7 @@ class SignInForm extends Component {
 
     this.state = { ...INITIAL_STATE };
   }
-
+  //When a user press sign in, sets the email and password to this.state
   onSubmit = (event) => {
     const {
       email,
@@ -48,7 +47,8 @@ class SignInForm extends Component {
     const {
       history,
     } = this.props;
-
+    //Checks with firebase if it is a valid user and then signs the user in.
+    //The user is reasigned to the home page
     auth.doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }));
@@ -62,7 +62,6 @@ class SignInForm extends Component {
 
   render() {
     const {
-      //username,
       email,
       password,
       error,
@@ -71,7 +70,7 @@ class SignInForm extends Component {
     const isInvalid =
       password === '' ||
       email === '';
-
+    //Returns the form for sign in
     return (
         <form onSubmit={this.onSubmit}>
         <center>        
@@ -105,13 +104,17 @@ class SignInForm extends Component {
   }
 }
 
+const paddingStyles = {
+  marginTop: 20,
+};
+//Style of the sign in button
 const buttonStyles = {
     marginTop: 20,
     textColor: 'white',
     backgroundColor: 'orange',
     width: 120
   };
-  
+  //Style of the sign in form
   const inputWindowStyles = {
     marginTop: 20,
     width: 320,

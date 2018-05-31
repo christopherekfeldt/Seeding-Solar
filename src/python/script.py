@@ -30,10 +30,10 @@ def main():
     today = datetime.date.today()
     todaystr = today.strftime("%Y-%m-%d")
     
-    #sumActivePanels("BaWXlaOTHEWLnUWr8RRLotNQCnp1", today)
     updateDatabase(today, todaystr)
     
 #---------------------------------------------------------------------#
+#Updates the database for each user
 def updateDatabase(today, todaystr):
     users = db.child("users").get()
     for user in users.each():
@@ -53,12 +53,14 @@ def getUserAccount(userId):
 
 
 #-----------------------------------------------#
+#Adds the montly payback from hoseholds to the users "account"
 def updateAccount(userId, today):
     newAccount = getUserAccount(userId) + monthlySumPayBack(userId, today)
     db.child("users").child(userId).update({"account": newAccount})
 
 
 #-----------------------------------------------#
+#Reduces the users account based on how many solar panels the user can afford this month
 def reducedAccount(userId):
     account = db.child("users").child(userId).child("account").get()
     costForNewPanels = calcPanelsPerMonth(userId) * costPerPanel
@@ -68,9 +70,9 @@ def reducedAccount(userId):
 #-----------CALCULATES AND RETURN A USERS MONTLY PAYBACK ON SUNPANELS--------------#
 def monthlySumPayBack(userId, today):
     monthlySumPayBack = sumActivePanels(userId, today) * paybackPerMonth * intrest 
-    #print (monthlySumPayBack)
     return monthlySumPayBack 
 #---------------------------------------------------------------------------------#
+#Updates the total ammount of sold panels for the user in the database
 def updateSoldPanels(userId):
     previousAmountSoldPanels = db.child("users").child(userId).child("soldPanels").get()
     soldPanels = calcPanelsPerMonth(userId) + previousAmountSoldPanels.val()

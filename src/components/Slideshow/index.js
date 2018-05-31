@@ -24,7 +24,7 @@ const items = [
     caption: 'Slide 3'
   }
 ];
-
+// Slidshow on the first page when you visit the website
 class Slideshow extends Component {
   constructor(props) {
     super(props);

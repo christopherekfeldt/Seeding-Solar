@@ -4,6 +4,8 @@ import { compose } from 'recompose';
 import PasswordChangeForm from '../PasswordChange';
 import withAuthorization from '../Session/withAuthorization';
 
+//The settings page for a user
+//Here the user can change password
 const SettingPage = ({ authUser }) =>
   <div>
     <center>
@@ -15,7 +17,7 @@ const SettingPage = ({ authUser }) =>
 const mapStateToProps = (state) => ({
   authUser: state.sessionState.authUser,
 });
-
+//Can only be accessed by users that are signed in
 const authCondition = (authUser) => !!authUser;
 
 export default compose(
